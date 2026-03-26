@@ -22,6 +22,103 @@
 }
 
 /* ══════════════════════════════════════════
+   TEMA CLARO
+   Ativado via: <html data-theme="light">
+══════════════════════════════════════════ */
+[data-theme="light"] {
+  --bg: #eef1f7;
+  --s1: #ffffff;
+  --s2: #e2e8f4;
+  --border: #c0ccdf;
+  --cyan: #0077aa;
+  --green: #0a7a55;
+  --yellow: #a0720a;
+  --red: #c01030;
+  --orange: #b84000;
+  --accent: #007a60;
+  --muted: #8a9bbf;
+  --text: #141c2e;
+  --text2: #4a5a7a;
+  --frame-border: rgba(0, 119, 170, 0.28);
+  --frame-glow: rgba(0, 119, 170, 0.06);
+}
+
+/* ── Scrollbar (tema claro) ── */
+[data-theme="light"] *::-webkit-scrollbar-track { background: rgba(192, 204, 223, .4); }
+[data-theme="light"] *::-webkit-scrollbar-thumb { background: rgba(0, 119, 170, .25); border-color: rgba(0, 119, 170, .1); }
+[data-theme="light"] *::-webkit-scrollbar-thumb:hover { background: rgba(0, 119, 170, .5); }
+[data-theme="light"] body { scrollbar-color: rgba(0, 119, 170, 0.4) var(--bg); }
+
+/* ── Upload box (tema claro) ── */
+[data-theme="light"] .upload-box { background: var(--s1); box-shadow: 0 20px 60px rgba(0, 0, 0, .1); }
+[data-theme="light"] .upload-lbl { background: rgba(0, 119, 170, .06); border-color: rgba(0, 119, 170, .3); }
+[data-theme="light"] .upload-lbl:hover { background: rgba(0, 119, 170, .12); box-shadow: 0 0 20px rgba(0, 119, 170, .15); }
+[data-theme="light"] .col-list { background: var(--s2); border-color: var(--border); }
+
+/* ── Botões centro (tema claro) ── */
+[data-theme="light"] .btn-centro { background: var(--s1); border-color: rgba(0, 119, 170, .2); }
+[data-theme="light"] .btn-centro:hover { background: rgba(0, 119, 170, .07); box-shadow: 0 6px 20px rgba(0, 119, 170, .1); }
+[data-theme="light"] .btn-centro.active { background: rgba(0, 119, 170, .1); box-shadow: 0 0 20px rgba(0, 119, 170, .15), inset 0 1px 0 rgba(0, 119, 170, .12); }
+
+/* ── Nav FAB (tema claro) ── */
+[data-theme="light"] .nav-fab { background: var(--s1); border-color: rgba(0, 119, 170, .3); box-shadow: 0 4px 20px rgba(0, 0, 0, .1); }
+[data-theme="light"] .nav-fab:hover { background: rgba(0, 119, 170, .07); box-shadow: 0 0 20px rgba(0, 119, 170, .12), 0 4px 20px rgba(0, 0, 0, .08); }
+[data-theme="light"] .botao-padrao img { filter: brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(700%) hue-rotate(172deg); }
+
+/* ── Dash frame (tema claro) ── */
+[data-theme="light"] .dash-frame {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .97) 0%, rgba(238, 241, 247, .9) 100%);
+  box-shadow: 0 0 0 1px rgba(0, 119, 170, .08), 0 0 40px rgba(0, 119, 170, .04), inset 0 1px 0 rgba(0, 119, 170, .06), 0 4px 40px rgba(0, 0, 0, .07);
+}
+
+/* ── Filtros / Multiselect (tema claro) ── */
+[data-theme="light"] .filters { background: rgba(226, 232, 244, .6); }
+[data-theme="light"] .ms-btn { background: var(--s1); border-color: rgba(0, 119, 170, .2); color: var(--text); }
+[data-theme="light"] .ms-btn .ms-label { color: var(--text); }
+[data-theme="light"] .ms-btn .ms-arrow { color: var(--text2); }
+[data-theme="light"] .ms-btn:hover,
+[data-theme="light"] .ms-btn.open { background: rgba(0, 119, 170, .06); box-shadow: 0 0 10px rgba(0, 119, 170, .1); }
+[data-theme="light"] .ms-btn .ms-count { color: #fff; }
+[data-theme="light"] .ms-dropdown { background: var(--s1); box-shadow: 0 8px 24px rgba(0, 0, 0, .14); }
+[data-theme="light"] .ms-search { background: var(--s2); border-bottom-color: rgba(0, 119, 170, .2); }
+[data-theme="light"] .ms-search:focus { background: rgba(0, 119, 170, .05); }
+[data-theme="light"] .ms-item { border-bottom-color: rgba(192, 204, 223, .5); }
+[data-theme="light"] .ms-item:hover { background: rgba(0, 119, 170, .06); }
+
+/* ── Panel / tabela (tema claro) ── */
+[data-theme="light"] .panel { background: rgba(255, 255, 255, .85); }
+
+/* ── Modal (tema claro) ── */
+[data-theme="light"] .modal { background: var(--s1); box-shadow: 0 20px 60px rgba(0, 0, 0, .2); }
+[data-theme="light"] .modal-tbl tbody tr { border-bottom-color: rgba(192, 204, 223, .6); }
+[data-theme="light"] .modal-tbl tbody tr:hover { background: rgba(0, 119, 170, .04); }
+
+/* ── Barra de centro (tema claro) ── */
+[data-theme="light"] .dash-centro-bar { background: rgba(226, 232, 244, .6); }
+[data-theme="light"] .btn-centro-sm { background: var(--s1); border-color: rgba(0, 119, 170, .18); }
+[data-theme="light"] .btn-centro-sm:hover { background: rgba(0, 119, 170, .06); }
+[data-theme="light"] .btn-centro-sm.active { background: rgba(0, 119, 170, .1); box-shadow: 0 0 10px rgba(0, 119, 170, .12); }
+
+/* ── File info (tema claro) ── */
+[data-theme="light"] .file-info { background: rgba(10, 122, 85, .08); border-color: rgba(10, 122, 85, .3); }
+
+/* ── Chips / badges (tema claro) ── */
+[data-theme="light"] .c-enc  { background: rgba(10, 122, 85, .12);  border-color: rgba(10, 122, 85, .35); }
+[data-theme="light"] .c-lib  { background: rgba(0, 122, 96, .12);   border-color: rgba(0, 122, 96, .35); }
+[data-theme="light"] .c-fmp  { background: rgba(0, 119, 170, .12);  border-color: rgba(0, 119, 170, .35); }
+[data-theme="light"] .c-prog { background: rgba(160, 114, 10, .12); border-color: rgba(160, 114, 10, .35); }
+[data-theme="light"] .c-imp  { background: rgba(74, 90, 122, .12);  border-color: rgba(74, 90, 122, .35); color: var(--text2); }
+[data-theme="light"] .c-esp  { background: rgba(184, 64, 0, .12);   border-color: rgba(184, 64, 0, .35); }
+[data-theme="light"] .c-risk { background: rgba(192, 16, 48, .12);  border-color: rgba(192, 16, 48, .35); }
+
+/* ── Modal tabela zebra (tema claro) ── */
+[data-theme="light"] .modal-tbl tbody tr:nth-child(even) { background: rgba(226, 232, 244, .4); }
+
+/* ── Modal body SIM/NÃO badges (tema claro - aumenta borda para compensar bg inline) ── */
+[data-theme="light"] .modal-body span[style*="rgba(31,221,158"] { outline: 1px solid rgba(10, 122, 85, .3); }
+[data-theme="light"] .modal-body span[style*="rgba(255,77,109"] { outline: 1px solid rgba(192, 16, 48, .3); }
+
+/* ══════════════════════════════════════════
    RESET
 ══════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -305,6 +402,8 @@ html, body {
 .file-info { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--cyan); background: rgba(31, 221, 158, .07); border: 1px solid rgba(31, 221, 158, .2); padding: 4px 12px; }
 .reload-btn { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); background: none; border: 1px solid var(--border); padding: 4px 12px; cursor: pointer; transition: all .15s; }
 .reload-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+.theme-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); background: none; border: 1px solid var(--border); padding: 4px 12px; cursor: pointer; transition: all .15s; letter-spacing: 1px; }
+.theme-toggle:hover { border-color: var(--yellow); color: var(--yellow); }
 .clear-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--text2); background: transparent; border: 1px solid transparent; padding: 6px 12px; cursor: pointer; transition: all .2s; border-radius: 4px; letter-spacing: 1px; }
 .clear-btn:hover { color: var(--red); background: rgba(255, 77, 109, .1); border-color: rgba(255, 77, 109, .3); }
 
@@ -312,7 +411,7 @@ html, body {
    FILTROS / MULTISELECT
 ══════════════════════════════════════════ */
 .filters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; padding: 10px 14px; background: rgba(18, 24, 38, .5); border: 1px solid var(--border); border-radius: 6px; position: relative; z-index: 20; flex-shrink: 0; }
-.fl { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #fff; }
+.fl { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text); }
 .ms-wrap { position: relative; }
 .ms-btn { display: flex; align-items: center; gap: 6px; background: rgba(26, 32, 53, .5); border: 1px solid rgba(0, 212, 255, .15); border-radius: 4px; color: #fff; font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 6px 12px; cursor: pointer; white-space: nowrap; transition: all .2s; min-width: 110px; justify-content: space-between; user-select: none; overflow: hidden; }
 .ms-btn:hover, .ms-btn.open { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 212, 255, .08); box-shadow: 0 0 10px rgba(0, 212, 255, .15); }

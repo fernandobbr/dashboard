@@ -154,3 +154,25 @@
   .kpis { grid-template-columns: repeat(3, 1fr); }
   .bottom { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════════════════════════
+   TEMA CLARO — overrides dashboard
+══════════════════════════════════════════ */
+[data-theme="light"] .kpi { background: var(--s1); }
+[data-theme="light"] .search-input { background: var(--s1); border-color: rgba(0, 119, 170, .25); }
+[data-theme="light"] .search-input:focus { background: rgba(0, 119, 170, .05); box-shadow: 0 0 12px rgba(0, 119, 170, .12); }
+[data-theme="light"] .tbl tbody tr { border-bottom-color: rgba(192, 204, 223, .5); }
+[data-theme="light"] .tbl tbody tr:nth-child(even) { background: rgba(192, 210, 230, .35); }
+[data-theme="light"] .update-notice { background: rgba(160, 114, 10, .08); border-color: rgba(160, 114, 10, .35); }
+[data-theme="light"] .tbl tbody tr:hover { background: rgba(0, 119, 170, .05); }
+[data-theme="light"] .hbar-row { border-bottom-color: rgba(192, 204, 223, .6); }
+[data-theme="light"] .hbar-row.clickable:hover { background: rgba(0, 119, 170, .04); }
+[data-theme="light"] .grp-row { border-bottom-color: rgba(192, 204, 223, .6); }
+[data-theme="light"] .grp-row:hover { background: rgba(0, 119, 170, .04); }
+[data-theme="light"] .pag-btn.active { background: rgba(0, 119, 170, .08); }
+[data-theme="light"] .grp-toggle.active { background: rgba(0, 119, 170, .08); }
+[data-theme="light"] .peso-src-badge { background: rgba(160, 114, 10, .08); border-color: rgba(160, 114, 10, .2); }
+[data-theme="light"] .anl-f1 { background: rgba(0, 119, 170, .1); }
+[data-theme="light"] .anl-f2 { background: rgba(184, 64, 0, .1); }
+[data-theme="light"] .anl-g  { background: rgba(160, 114, 10, .1); }
+[data-theme="light"] .anl-f2g { background: rgba(192, 16, 48, .1); }

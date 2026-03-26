@@ -11,6 +11,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/extensao.css">
+  <script>if(sessionStorage.getItem('dash_theme')==='light')document.documentElement.setAttribute('data-theme','light');</script>
 </head>
 
 <body>
@@ -96,6 +97,7 @@
             onmouseover="this.style.color='var(--cyan)';this.style.borderColor='var(--cyan)'"
             onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">← DASH PRODUÇÃO</a>
           <div class="file-info" id="fileInfo">—</div>
+          <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀ CLARO</button>
           <button class="reload-btn" id="reloadBtn">↺ TROCAR ARQUIVO</button>
         </div>
       </div>
@@ -107,7 +109,7 @@
 
       <!-- FILTROS -->
       <div class="filters">
-        <span class="fl" style="color:#ffffff">Filtros:</span>
+        <span class="fl">Filtros:</span>
 
         <div class="ms-wrap">
           <div class="ms-btn" id="btn-fSemana" onclick="toggleMs('fSemana')">

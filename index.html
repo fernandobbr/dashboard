@@ -11,6 +11,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/dashboard.css">
+  <script>if(sessionStorage.getItem('dash_theme')==='light')document.documentElement.setAttribute('data-theme','light');</script>
 </head>
 
 <body>
@@ -29,7 +30,7 @@
   <div id="uploadScreen">
     <div class="upload-box">
       <span style="font-size:48px;display:block;margin-bottom:20px;">📊</span>
-      <h2>Dashboard Produção - V4.2</h2>
+      <h2>Dashboard Produção - V4.3</h2>
       <p>Selecione o arquivo <strong style="color:var(--cyan)">analise_producao.xlsx</strong> exportado do
         Protheus.<br>Os dados preenchem o dashboard automaticamente.</p>
       <label class="upload-lbl" for="fileInput">▲ SELECIONAR ARQUIVO EXCEL</label>
@@ -86,6 +87,7 @@
         </div>
         <div class="topbar-r">
           <div class="file-info" id="fileInfo">—</div>
+          <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀ CLARO</button>
           <button class="reload-btn" id="reloadBtn">↺ TROCAR ARQUIVO</button>
         </div>
       </div>
@@ -106,7 +108,7 @@
 
       <!-- FILTROS -->
       <div class="filters">
-        <span class="fl" style="color:#ffffff">Filtros:</span>
+        <span class="fl">Filtros:</span>
 
         <div class="ms-wrap" id="wrap-fSemana">
           <div class="ms-btn" id="btn-fSemana" onclick="toggleMs('fSemana')">
@@ -374,7 +376,7 @@
       <div class="clog-bl"></div>
       <div class="clog-head">
         <div class="clog-head-l">
-          <div class="clog-version">V4.2</div>
+          <div class="clog-version">V4.3</div>
           <div>
             <div class="clog-title">Novidades desta versão</div>
             <div class="clog-date">Atualizado em março · 2026</div>
@@ -384,25 +386,40 @@
       </div>
       <div class="clog-body">
         <div class="clog-section">
+          <div class="clog-section-title">Novo</div>
+          <div class="clog-item">
+            <div class="clog-dot" style="background:var(--green)"></div>
+            <div class="clog-text"><strong>Tema Claro / Escuro</strong> — botão de alternância na barra superior, preferência salva por sessão. <span class="clog-tag tag-new">NOVO</span></div>
+          </div>
+        </div>
+        <div class="clog-section">
           <div class="clog-section-title">Melhorias</div>
           <div class="clog-item">
-            <div class="clog-dot" style="background:var(--green)"></div>
-            <div class="clog-text">Seleção dinâmica de <strong>Centro de Trabalho</strong> (Montagem, Solda, Robô de
-              Solda) sem recarregar a página. <span class="clog-tag tag-new">NOVO</span></div>
-          </div>
-          <div class="clog-item">
-            <div class="clog-dot" style="background:var(--green)"></div>
-            <div class="clog-text">Arquivo único <strong>analise_producao.xlsx</strong> com múltiplas abas substituindo
-              uploads múltiplos. <span class="clog-tag tag-new">NOVO</span></div>
+            <div class="clog-dot" style="background:var(--cyan)"></div>
+            <div class="clog-text"><strong>Dados limpos ao fechar o browser</strong> — migrado para <em>sessionStorage</em>, sem dados residuais entre sessões.</div>
           </div>
           <div class="clog-item">
             <div class="clog-dot" style="background:var(--cyan)"></div>
-            <div class="clog-text">Coluna <strong>Saldo Atual</strong> e <strong>Saldo Disp.</strong> adicionadas na
-              tabela principal.</div>
+            <div class="clog-text"><strong>Loading padronizado</strong> — tela única "CARREGANDO DADOS" em ambos os painéis.</div>
           </div>
           <div class="clog-item">
             <div class="clog-dot" style="background:var(--yellow)"></div>
-            <div class="clog-text">Coluna <strong>Preparação</strong> com filtro dedicado na barra de filtros.</div>
+            <div class="clog-text"><strong>Botões de navegação</strong> padronizados com ícone PNG e classe compartilhada entre dashboards.</div>
+          </div>
+          <div class="clog-item">
+            <div class="clog-dot" style="background:var(--yellow)"></div>
+            <div class="clog-text"><strong>Contraste no tema claro</strong> — chips, tabelas zebradas, painel de aviso e etiquetas agora visíveis corretamente.</div>
+          </div>
+        </div>
+        <div class="clog-section">
+          <div class="clog-section-title">Versão anterior (V4.2)</div>
+          <div class="clog-item">
+            <div class="clog-dot" style="background:var(--green)"></div>
+            <div class="clog-text">Seleção dinâmica de <strong>Centro de Trabalho</strong> sem recarregar a página.</div>
+          </div>
+          <div class="clog-item">
+            <div class="clog-dot" style="background:var(--green)"></div>
+            <div class="clog-text">Arquivo único <strong>analise_producao.xlsx</strong> com múltiplas abas.</div>
           </div>
         </div>
         <div class="clog-notice">

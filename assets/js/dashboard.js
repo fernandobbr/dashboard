@@ -30,6 +30,7 @@ var COLS = [
 })();
 
 window.onload = function () {
+  initTheme();
   /* ── 1. Identificar o centro salvo (ou padrão) ── */
   var savedSheet = sessionStorage.getItem('dash_sheet') || 'dash-montagem';
   _activeSheet = savedSheet;
@@ -139,11 +140,11 @@ window.onload = function () {
   });
   if (window.DEV_MODE) { processData(window.MOCK_DATA, 'mock_dados.xlsx'); renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet); showNavFab(); }
 
-  /* ── 6. Mostrar Changelog V4.2 no primeiro acesso ── */
+  /* ── 6. Mostrar Changelog V4.3 no primeiro acesso ── */
   setTimeout(function() {
-    if (!localStorage.getItem('dash_v42_seen')) {
+    if (!localStorage.getItem('dash_v43_seen')) {
       openChangelog();
-      localStorage.setItem('dash_v42_seen', '1');
+      localStorage.setItem('dash_v43_seen', '1');
     }
   }, 600);
 };

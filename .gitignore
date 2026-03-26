@@ -1,0 +1,14 @@
+# Dados sensíveis — não subir para o repositório
+*.xlsx
+*.xls
+*.csv
+
+# Sistema operacional
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editores
+.vscode/
+*.suo
+*.user

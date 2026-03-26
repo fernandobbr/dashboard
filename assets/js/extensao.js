@@ -2,6 +2,7 @@
 var allData = [], filteredData = [], msState = {}, recSortCol = 'total', recSortDir = -1, _activeSheet = 'dash-montagem';
 
 window.onload = function () {
+  initTheme();
   /* ── 1. Carregar estado do sessionStorage ── */
   var cached = loadFromStorage();
 
