@@ -1,0 +1,65 @@
+/* ══════════════════════════════════════════
+   EXTENSÃO — estilos específicos
+   Página: extensao.html
+══════════════════════════════════════════ */
+
+/* ── Layout ── */
+html, body { overflow: hidden; }
+#dashboard { display: none; width: 100vw; height: 100vh; padding: 12px 14px; flex-direction: column; overflow: hidden; }
+#dashboard.active { display: flex; }
+.dash-frame { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; padding: 14px 18px; }
+
+
+/* ── KPIs superiores ── */
+.kpis-top { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 12px; flex-shrink: 0; }
+.kpi-top { background: rgba(18, 24, 38, .7); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px; }
+.kpi-top .kpi-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text2); font-weight: 600; }
+.kpi-top .kpi-val { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 700; line-height: 1; }
+.kpi-top .kpi-sub { font-size: 9px; color: var(--muted); }
+.kpi-top.ops-verif   { border-left: 3px solid var(--yellow); } .kpi-top.ops-verif .kpi-val   { color: var(--yellow); }
+.kpi-top.peso-geral  { border-left: 3px solid var(--cyan); }   .kpi-top.peso-geral .kpi-val  { color: var(--cyan); }
+.kpi-top.em-condicao { border-left: 3px solid var(--green); }  .kpi-top.em-condicao .kpi-val { color: var(--green); }
+.kpi-top.sem-condicao { border-left: 3px solid var(--red); }   .kpi-top.sem-condicao .kpi-val { color: var(--red); }
+.kpi-top.peso-liberado { border-left: 3px solid var(--accent); } .kpi-top.peso-liberado .kpi-val { color: var(--accent); }
+
+/* ── Painel / tabela extensão ── */
+.panel { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.tbl-wrap { flex: 1; min-height: 0; overflow-y: auto; overflow-x: auto; }
+
+/* ── Tabela de recursos ── */
+.rec-tbl { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.rec-tbl thead th { position: sticky; top: 0; z-index: 2; background: rgba(10, 14, 23, .97); border: 1px solid rgba(0, 212, 255, .18); padding: 9px 12px; text-align: left; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text2); white-space: nowrap; cursor: pointer; user-select: none; transition: color .15s; }
+.rec-tbl thead th:hover { color: var(--cyan); }
+.rec-tbl thead th.asc::after  { content: ' ▲'; color: var(--cyan); }
+.rec-tbl thead th.desc::after { content: ' ▼'; color: var(--cyan); }
+.rec-tbl tbody td { border: 1px solid rgba(26, 32, 53, .8); padding: 6px 12px; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'IBM Plex Mono', monospace; }
+.rec-tbl tbody tr:nth-child(even) td { background: rgba(18, 24, 38, .4); }
+.rec-tbl tbody tr:hover td { background: rgba(0, 212, 255, .04); border-color: rgba(0, 212, 255, .12); }
+.rec-tbl .total-row td { background: transparent !important; border-top: 2px solid rgba(0, 212, 255, .5) !important; border-bottom: 1px solid rgba(0, 212, 255, .2) !important; border-left: none !important; border-right: none !important; font-weight: 700; color: var(--cyan) !important; font-size: 12px !important; }
+.rec-tbl .total-row td:first-child { background: linear-gradient(90deg, rgba(0, 212, 255, .1), transparent) !important; letter-spacing: 1px; }
+.rec-tbl th:nth-child(1), .rec-tbl td:nth-child(1) { width: 22%; font-weight: 700; color: var(--text); }
+.rec-tbl th:nth-child(2), .rec-tbl td:nth-child(2) { width: 13%; }
+.rec-tbl th:nth-child(3), .rec-tbl td:nth-child(3) { width: 13%; }
+.rec-tbl th:nth-child(4), .rec-tbl td:nth-child(4) { width: 13%; }
+.rec-tbl th:nth-child(5), .rec-tbl td:nth-child(5) { width: 12%; }
+.rec-tbl th:nth-child(6), .rec-tbl td:nth-child(6) { width: 27%; }
+.rec-cell-click { cursor: pointer; transition: opacity .15s; }
+.rec-cell-click:hover { opacity: .7; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Mini-barras de percentual ── */
+.pct-col { display: flex; flex-direction: column; gap: 3px; }
+.pct-row { display: flex; align-items: center; gap: 4px; }
+.pct-dot { width: 4px; height: 4px; border-radius: 1px; flex-shrink: 0; transform: rotate(45deg); }
+.pct-lbl { font-size: 8px; font-weight: 700; min-width: 20px; flex-shrink: 0; }
+.pct-bar-wrap { flex: 1; height: 6px; background: var(--s2); border-radius: 3px; overflow: hidden; }
+.pct-bar-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
+.pct-val { font-size: 11px; font-weight: 700; min-width: 28px; text-align: right; flex-shrink: 0; }
+
+/* ── Responsivo ── */
+@media (max-width: 1100px) {
+  .kpis-top { grid-template-columns: repeat(3, 1fr); }
+  .pct-col { display: none; }
+}
+@media (max-width: 700px) {
+  .kpis-top { grid-template-columns: repeat(2, 1fr); }
+}

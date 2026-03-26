@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚖ Painel de Recursos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/extensao.css">
+</head>
+
+<body>
+
+  <!-- LOADING GLOBAL (CARREGANDO DADOS) -->
+  <div id="globalLoading" class="global-loading" style="display:none">
+    <span class="global-loading-icon">◈</span>
+    <span class="global-loading-text">CARREGANDO DADOS...</span>
+  </div>
+
+  <!-- ANTI-FOUC LOADING SCRIPT -->
+  <script>
+    if (sessionStorage.getItem('dash_wb_binary')) {
+      document.getElementById('globalLoading').style.display = 'flex';
+      document.write('<style id="antiFoucUpload">#uploadScreen { display: none !important; }</style>');
+    }
+  </script>
+
+  <!-- ══════════════════════════════════════════
+     TELA DE UPLOAD
+══════════════════════════════════════════ -->
+  <div id="uploadScreen"
+    style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:var(--bg)">
+    <div class="upload-box">
+      <span style="font-size:48px;display:block;margin-bottom:20px;">⚖</span>
+      <h2>Painel de Recursos</h2>
+      <p>Selecione o arquivo <strong style="color:var(--cyan)">analise_producao.xlsx</strong> exportado do
+        Protheus.<br>O dashboard preenche automaticamente.</p>
+      <label class="upload-lbl" for="fileInput">▲ SELECIONAR ARQUIVO EXCEL</label>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
+      <div class="upload-hint">Formatos aceitos: .xlsx · .xls · .csv</div>
+      <div id="errMsg"></div>
+
+      <!-- Seletor de centro de trabalho -->
+      <div class="centro-selector">
+        <span class="centro-selector-label">Centro de Trabalho</span>
+        <div class="botoes-centro">
+          <!-- Renderizado por JS → renderCentroButtons() -->
+        </div>
+      </div>
+
+      <div class="col-list">
+        <p>Aba esperada:</p>
+        <div class="col-tags">
+          <span class="col-tag">dash-montagem</span>
+          <span class="col-tag">dash-solda</span>
+          <span class="col-tag">dash-robo-solda</span>
+        </div>
+      </div>
+
+      <!-- Botão de voltar -->
+      <div style="margin-top:18px;text-align:center">
+        <a href="index.html"
+          style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:6px 14px;border-radius:4px;transition:all .2s;display:inline-block"
+          onmouseover="this.style.color='var(--cyan)';this.style.borderColor='var(--cyan)'"
+          onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">← Dashboard Produção</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════ -->
+  <div id="dashboard"
+    style="display:none;width:100vw;height:100vh;padding:12px 14px;flex-direction:column;overflow:hidden">
+
+    <div class="dash-frame">
+      <div class="dash-frame-tr"></div>
+      <div class="dash-frame-bl"></div>
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="topbar-l">
+          <h1 style="font-size:18px;font-weight:700;letter-spacing:2px">
+            <span style="color:var(--cyan)">F1</span>
+            <span style="color:var(--cyan);margin:0 8px">◈</span>
+            <span style="color:var(--cyan)">PAINEL DE RECURSOS</span>
+          </h1>
+        </div>
+        <div class="topbar-r">
+          <a href="index.html"
+            style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:4px 12px;transition:all .2s"
+            onmouseover="this.style.color='var(--cyan)';this.style.borderColor='var(--cyan)'"
+            onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">← DASH PRODUÇÃO</a>
+          <div class="file-info" id="fileInfo">—</div>
+          <button class="reload-btn" id="reloadBtn">↺ TROCAR ARQUIVO</button>
+        </div>
+      </div>
+
+      <!-- BARRA DE CENTRO DE TRABALHO -->
+      <div class="dash-centro-bar">
+        <!-- Renderizado por main.js → renderCentroBar() -->
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filters">
+        <span class="fl" style="color:#ffffff">Filtros:</span>
+
+        <div class="ms-wrap">
+          <div class="ms-btn" id="btn-fSemana" onclick="toggleMs('fSemana')">
+            <span class="ms-label" id="lbl-fSemana">Semana: todas</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fSemana">
+            <input class="ms-search" placeholder="Buscar..." oninput="filterMsItems('fSemana',this.value)">
+            <div class="ms-actions"><button class="ms-act-btn" onclick="selectAllMs('fSemana')">Todos</button><button
+                class="ms-act-btn" onclick="clearMs('fSemana')">Limpar</button></div>
+            <div id="items-fSemana"></div>
+          </div>
+        </div>
+
+        <div class="ms-wrap">
+          <div class="ms-btn" id="btn-fSitPai" onclick="toggleMs('fSitPai')">
+            <span class="ms-label" id="lbl-fSitPai">Sit. Pai: todas</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fSitPai">
+            <input class="ms-search" placeholder="Buscar..." oninput="filterMsItems('fSitPai',this.value)">
+            <div class="ms-actions"><button class="ms-act-btn" onclick="selectAllMs('fSitPai')">Todos</button><button
+                class="ms-act-btn" onclick="clearMs('fSitPai')">Limpar</button></div>
+            <div id="items-fSitPai"></div>
+          </div>
+        </div>
+
+        <div class="ms-wrap">
+          <div class="ms-btn" id="btn-fRecursoPai" onclick="toggleMs('fRecursoPai')">
+            <span class="ms-label" id="lbl-fRecursoPai">Recurso Pai: todos</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fRecursoPai">
+            <input class="ms-search" placeholder="Buscar..." oninput="filterMsItems('fRecursoPai',this.value)">
+            <div class="ms-actions"><button class="ms-act-btn"
+                onclick="selectAllMs('fRecursoPai')">Todos</button><button class="ms-act-btn"
+                onclick="clearMs('fRecursoPai')">Limpar</button></div>
+            <div id="items-fRecursoPai"></div>
+          </div>
+        </div>
+
+        <div class="ms-wrap">
+          <div class="ms-btn" id="btn-fPreparacao" onclick="toggleMs('fPreparacao')">
+            <span class="ms-label" id="lbl-fPreparacao">Preparação: todas</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fPreparacao">
+            <div class="ms-actions"><button class="ms-act-btn"
+                onclick="selectAllMs('fPreparacao')">Todos</button><button class="ms-act-btn"
+                onclick="clearMs('fPreparacao')">Limpar</button></div>
+            <div id="items-fPreparacao"></div>
+          </div>
+        </div>
+
+        <div class="ms-wrap">
+          <div class="ms-btn" id="btn-fSaldoDisp" onclick="toggleMs('fSaldoDisp')">
+            <span class="ms-label" id="lbl-fSaldoDisp">Saldo Disp.: todos</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fSaldoDisp">
+            <div class="ms-actions"><button class="ms-act-btn" onclick="selectAllMs('fSaldoDisp')">Todos</button><button
+                class="ms-act-btn" onclick="clearMs('fSaldoDisp')">Limpar</button></div>
+            <div id="items-fSaldoDisp"></div>
+          </div>
+        </div>
+
+        <div class="ms-wrap">
+          <div class="ms-btn" id="btn-fPendente" onclick="toggleMs('fPendente')">
+            <span class="ms-label" id="lbl-fPendente">Pendente: todos</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fPendente">
+            <div class="ms-actions"><button class="ms-act-btn" onclick="selectAllMs('fPendente')">Todos</button><button
+                class="ms-act-btn" onclick="clearMs('fPendente')">Limpar</button></div>
+            <div id="items-fPendente"></div>
+          </div>
+        </div>
+
+        <button class="clear-btn" onclick="clearAllFilters()">✕ Limpar Filtros</button>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)" id="rowCount"></span>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpis-top">
+        <div class="kpi-top ops-verif">
+          <div class="kpi-lbl">OPs VERIFICADAS</div>
+          <div class="kpi-val" id="kpOpsVerif">—</div>
+          <div class="kpi-sub">ordens processadas</div>
+        </div>
+        <div class="kpi-top peso-geral">
+          <div class="kpi-lbl">PESO GERAL</div>
+          <div class="kpi-val" id="kpPesoGeral">—</div>
+          <div class="kpi-sub">soma por OP_KEY única</div>
+        </div>
+        <div class="kpi-top em-condicao">
+          <div class="kpi-lbl">EM CONDIÇÃO</div>
+          <div class="kpi-val" id="kpEmCond">—</div>
+          <div class="kpi-sub">todos os filhos Saldo = SIM</div>
+        </div>
+        <div class="kpi-top sem-condicao">
+          <div class="kpi-lbl">SEM CONDIÇÃO</div>
+          <div class="kpi-val" id="kpSemCond">—</div>
+          <div class="kpi-sub">algum filho Saldo = NÃO</div>
+        </div>
+        <div class="kpi-top peso-liberado">
+          <div class="kpi-lbl">PESO LIBERADO</div>
+          <div class="kpi-val" id="kpPesoLiberado">—</div>
+          <div class="kpi-sub">PREPARACAO = Liberada</div>
+        </div>
+      </div>
+
+      <!-- TABELA -->
+      <div class="panel">
+        <div class="ph">
+          <span class="pt">◈ DISTRIBUIÇÃO POR RECURSO</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)"
+            id="recRowCount">—</span>
+        </div>
+        <div class="tbl-wrap">
+          <table class="rec-tbl">
+            <thead>
+              <tr id="recThead">
+                <th onclick="recSortBy('recurso',0)">RECURSO</th>
+                <th onclick="recSortBy('emCondicao',1)" style="color:var(--green)">EM CONDIÇÃO</th>
+                <th onclick="recSortBy('semCondicao',2)" style="color:var(--red)">SEM CONDIÇÃO</th>
+                <th onclick="recSortBy('pesoLiberado',3)" style="color:var(--accent)">PESO LIBERADO</th>
+                <th onclick="recSortBy('total',4)" style="color:var(--yellow)">TOTAL</th>
+                <th>% POR RECURSO</th>
+              </tr>
+            </thead>
+            <tbody id="recBody">
+              <tr>
+                <td colspan="6" class="no-data">Aguardando dados…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /dash-frame -->
+  </div><!-- /dashboard -->
+
+  <!-- ══════════════════════════════════════════
+     MODAL
+══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalBox">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title" id="modalTitle">—</div>
+          <div class="modal-sub" id="modalSub">—</div>
+        </div>
+        <div class="modal-actions">
+          <button class="modal-btn" id="modalExpand">⛶ EXPANDIR</button>
+          <button class="modal-btn close-btn" id="modalClose">✕ FECHAR</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <table class="modal-tbl">
+          <thead id="modalThead"></thead>
+          <tbody id="modalBody"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer" id="modalFooter">—</div>
+    </div>
+  </div>
+
+  <!-- Botão flutuante de navegação -->
+  <a href="index.html" class="nav-fab botao-padrao" title="Voltar ao Dashboard de Produção">
+    <img src="assets/img/producao.png" alt="Dashboard Produção">
+    DASHBOARD PRODUÇÃO
+  </a>
+
+  <!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- <script src="assets/js/dev-mock.js"></script> -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/extensao.js"></script>
+
+</body>
+
+</html>
