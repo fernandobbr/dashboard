@@ -15,6 +15,7 @@ var COLS = [
   { key: 'OP_FILHO', label: 'OP FILHO', cls: 'mono op-o' },
   { key: 'COD_PRODUTO_FILHO', label: 'Cód. Filho', cls: 'mono', style: 'color:var(--text2);font-size:12px' },
   { key: 'DESC_PRODUTO_FILHO', label: 'Produto Filho', cls: '', maxw: 160 },
+  { key: 'QTD_FILHO', label: 'Qtd.', cls: 'mono', style: 'color:var(--text2);font-size:12px' },
   { key: 'PESO_FILHO', label: 'Peso Filho', cls: 'mono', style: 'color:var(--yellow)', fmt: 'kg' },
   { key: 'SITUACAO_FILHO', label: 'Sit. Filho', cls: '', chip: true },
   { key: 'ANALISE', label: 'Análise', cls: '', anl: true },
@@ -184,14 +185,18 @@ function processData(json, fname) {
       OP_KEY: s(norm['OP_PAI'] || norm['OP_KEY']), COD_PRODUTO_PAI: s(norm['COD_PRODUTO_PAI']),
       DESC_PRODUTO_PAI: s(norm['DESC_PRODUTO_PAI']), PESO_PAI: n(norm['PESO_PAI']),
       SITUACAO_PAI: s(norm['SITUACAO_PAI']), USO_PAI: s(norm['USO_PAI']), GRUPO_PAI: s(norm['GRUPO_PAI']),
-      DATA_PRF: s(norm['DATA_PRF']), PREPARACAO: s(norm['PREPARACAO']), SEMANA: s(norm['SEMANA']),
+      DATA_PRF: s(norm['DATA_PRF']), PREPARACAO: (function(){ var p = s(norm['PREPARACAO']); return p.toLowerCase().startsWith('em andamento') ? 'Em Andamento' : p; })(), SEMANA: s(norm['SEMANA']),
       RECURSO: s(norm['RECURSO'] || norm['MONTAGEM']), OP_FILHO: s(norm['OP_FILHO']),
       COD_PRODUTO_FILHO: s(norm['COD_PRODUTO_FILHO']), DESC_PRODUTO_FILHO: s(norm['DESC_PRODUTO_FILHO']),
+      QTD_FILHO: n(norm['QTD_FILHO']),
       PESO_FILHO: n(norm['PESO_FILHO']), SITUACAO_FILHO: s(norm['SITUACAO_FILHO']), ANALISE: s(norm['ANALISE']),
       PERC_ENCERRADO: '', RECURSO_PENDENTE: s(norm['RECURSO_PENDENTE']),
       SALDO_ATUAL: n(norm['SALDO_DISPONIVEL']), SALDO_DISP: s(norm['EM_CONDICAO'])
     };
   });
+
+  /* ── Ocultar itens COMPRADO: lógica isolada pendente ── */
+  allData = allData.filter(function (r) { return s(r.ANALISE).toLowerCase() !== 'comprado'; });
 
   var percMap = {};
   allData.forEach(function (r) { if (!r.OP_KEY || !r.OP_FILHO) return; if (!percMap[r.OP_KEY]) percMap[r.OP_KEY] = { filhos: {} }; percMap[r.OP_KEY].filhos[r.OP_FILHO] = r.SITUACAO_FILHO; });
