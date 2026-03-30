@@ -143,9 +143,9 @@ window.onload = function () {
 
   /* ── 6. Mostrar Changelog V4.3 no primeiro acesso ── */
   setTimeout(function() {
-    if (!localStorage.getItem('dash_v43_seen')) {
+    if (!localStorage.getItem('dash_v44_seen')) {
       openChangelog();
-      localStorage.setItem('dash_v43_seen', '1');
+      localStorage.setItem('dash_v44_seen', '1');
     }
   }, 600);
 };
