@@ -11,62 +11,23 @@
     rel="stylesheet">
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/dashboard.css">
-  <script>if(sessionStorage.getItem('dash_theme')==='light')document.documentElement.setAttribute('data-theme','light');</script>
+  <script>
+    if (sessionStorage.getItem('dash_auth') !== '1') window.location.replace('login.html');
+    var _t = sessionStorage.getItem('dash_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', _t);
+  </script>
 </head>
 
 <body>
 
-  <!-- ANTI-FOUC LOADING SCRIPT -->
+  <!-- Redireciona para upload.html se não houver arquivo carregado -->
   <script>
-    if (sessionStorage.getItem('dash_wb_binary')) {
-      document.write('<style>#uploadScreen { display: none !important; }</style>');
+    if (!sessionStorage.getItem('dash_wb_binary')) {
+      window.location.replace('upload.html');
+    } else {
       document.write('<div id="globalLoading" class="global-loading"><span class="global-loading-icon">◈</span><span class="global-loading-text">CARREGANDO DADOS...</span></div>');
     }
   </script>
-
-  <!-- ══════════════════════════════════════════
-     TELA DE UPLOAD
-══════════════════════════════════════════ -->
-  <div id="uploadScreen">
-    <div class="upload-box">
-      <span style="font-size:48px;display:block;margin-bottom:20px;">📊</span>
-      <h2>Dashboard Produção - V4.3</h2>
-      <p>Selecione o arquivo <strong style="color:var(--cyan)">analise_producao.xlsx</strong> exportado do
-        Protheus.<br>Os dados preenchem o dashboard automaticamente.</p>
-      <label class="upload-lbl" for="fileInput">▲ SELECIONAR ARQUIVO EXCEL</label>
-      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
-      <div class="upload-hint">Formatos aceitos: .xlsx · .xls · .csv</div>
-      <div id="errMsg"></div>
-
-      <!-- Seletor de centro de trabalho -->
-      <div class="centro-selector">
-        <span class="centro-selector-label">Centro de Trabalho</span>
-        <div class="botoes-centro">
-          <!-- Renderizado por main.js → renderCentroButtons() -->
-        </div>
-      </div>
-
-      <div class="col-list">
-        <p>Abas esperadas:</p>
-        <div class="col-tags">
-          <span class="col-tag">dash-montagem</span>
-          <span class="col-tag">dash-solda</span>
-          <span class="col-tag">dash-robo-solda</span>
-        </div>
-      </div>
-
-      <!-- Assinatura -->
-      <div class="dev-signature">
-        <div class="sig-line"></div>
-        <div class="sig-content">
-          <span class="sig-label">Desenvolvido por</span>
-          <span class="sig-name">Fernando Moraes</span>
-          <span class="sig-dot">·</span>
-          <span class="sig-year">2026</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════════════
      DASHBOARD PRINCIPAL
@@ -95,15 +56,6 @@
       <!-- BARRA DE CENTRO DE TRABALHO -->
       <div class="dash-centro-bar">
         <!-- Renderizado por main.js → renderCentroBar() -->
-      </div>
-
-      <!-- AVISO DE ATUALIZAÇÃO -->
-      <div class="update-notice">
-        <div class="un-tl"></div>
-        <div class="un-br"></div>
-        <span class="update-icon">⏱</span>
-        <span class="update-text">Planilhas atualizadas diariamente às <strong>08:00</strong>, <strong>13:00</strong> e
-          <strong>15:45</strong></span>
       </div>
 
       <!-- FILTROS -->
@@ -426,11 +378,11 @@
     </div>
   </div>
 
-  <!-- Botão de navegação para Extensão -->
-  <a href="extensao.html" class="nav-fab botao-padrao" id="navFab" style="display:none" title="Abrir Painel de Recursos">
+  <!-- Botão de navegação para Extensão (desativado) -->
+  <!-- <a href="extensao.html" class="nav-fab botao-padrao" id="navFab" style="display:none" title="Abrir Painel de Recursos">
     <img src="assets/img/balanca-de-peso.png" alt="Painel de Recursos">
     PAINEL DE RECURSOS
-  </a>
+  </a> -->
 
   <!-- ══════════════════════════════════════════
      SCRIPTS

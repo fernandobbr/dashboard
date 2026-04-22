@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Produção — Acesso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <script>
+    var _t = sessionStorage.getItem('dash_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', _t);
+    if (true) window.location.replace('maintenance.html');
+  </script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    /* ── TEMA ── */
+    .login-theme-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text2);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .login-theme-btn:hover { border-color: var(--text2); color: var(--text); }
+
+    :root { --icon-filter-login: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(160deg); }
+    [data-theme="light"] { --icon-filter-login: brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(700%) hue-rotate(172deg); }
+
+    /* ── CARD ── */
+    .login-card {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid var(--frame-border);
+      border-top: 2px solid var(--cyan);
+      border-radius: 2px;
+      background: linear-gradient(160deg, var(--s1) 0%, var(--s2) 100%);
+      box-shadow: 0 0 0 1px rgba(0,212,255,.04),
+                  0 32px 72px rgba(0,0,0,.6),
+                  inset 0 1px 0 rgba(0,212,255,.07);
+      overflow: hidden;
+    }
+
+
+    /* ── TOPO DO CARD ── */
+    .login-card-top {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .login-logo-wrap {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(0,212,255,.25);
+      border-radius: 2px;
+      background: rgba(0,212,255,.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .login-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .login-brand-name {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.2px;
+    }
+
+    .login-brand-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
+    /* ── FORM ── */
+    .login-card-body {
+      padding: 28px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .login-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .login-field-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text2);
+    }
+
+    .login-input {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      padding: 11px 14px;
+      width: 100%;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      letter-spacing: 1px;
+    }
+    .login-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0,212,255,.08);
+    }
+    .login-input::placeholder { color: var(--muted); letter-spacing: 0; }
+
+    .login-submit {
+      width: 100%;
+      padding: 13px;
+      background: var(--cyan);
+      border: none;
+      border-radius: 2px;
+      color: #040810;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity .2s, box-shadow .2s;
+      margin-top: 4px;
+    }
+    .login-submit:hover {
+      opacity: .88;
+      box-shadow: 0 0 20px rgba(0,212,255,.25);
+    }
+    [data-theme="light"] .login-submit { color: #ffffff; }
+
+    .login-error {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--red);
+      letter-spacing: .5px;
+      min-height: 15px;
+      text-align: center;
+    }
+
+    /* ── FOOTER DO CARD ── */
+    .login-card-footer {
+      padding: 12px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="login-theme-btn" onclick="toggleTema()">
+    <svg id="tema-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+    </svg>
+    <span id="tema-label">Claro</span>
+  </button>
+
+  <div class="login-card">
+    <!-- TOPO -->
+    <div class="login-card-top">
+      <div class="login-logo-wrap">
+        <img src="assets/img/electronic.png" width="22" height="22" style="object-fit:contain;filter:var(--icon-filter-login)" alt="">
+      </div>
+      <div class="login-brand">
+        <div class="login-brand-name">Dashboard Produção</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="login-card-body">
+      <div class="login-field">
+        <label class="login-field-label" for="key-input">Senha</label>
+        <input type="password" id="key-input" class="login-input"
+          placeholder="Digite sua senha de acesso"
+          autocomplete="current-password" spellcheck="false">
+      </div>
+      <div>
+        <button class="login-submit" onclick="verificarSenha()">Entrar</button>
+        <div class="login-error" id="login-status"></div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="login-card-footer">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:100%">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-align:center;line-height:1.6;letter-spacing:.3px">
+          A senha de acesso é gerada pelo administrador do dashboard.<br>
+          Caso não possua acesso, entre em contato com o responsável.
+        </div>
+        <div class="dev-signature" style="margin:0">
+          <div class="sig-content">
+            <span class="sig-label">Desenvolvido por</span>
+            <span class="sig-name">Fernando Moraes</span>
+            <span class="sig-dot">·</span>
+            <span class="sig-year">2026</span>
+          </div>
+          <div style="text-align:center;margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--red)">Consilos</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const ACCESS_HASH = 'e2af7f3ca3e59fa719891391e4ded2113ef9f05bc745fbd2972b4d33c9f45eaf';
+    const AUTH_KEY    = 'dash_auth';
+
+    async function hashTexto(texto) {
+      const data = new TextEncoder().encode(texto.trim());
+      const buf  = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    async function verificarSenha() {
+      const input    = document.getElementById('key-input');
+      const statusEl = document.getElementById('login-status');
+      if (!input.value) {
+        statusEl.textContent = 'Digite sua senha para continuar.';
+        statusEl.style.color = 'var(--yellow)';
+        input.focus();
+        return;
+      }
+
+      statusEl.textContent = 'Verificando…';
+      statusEl.style.color = 'var(--text2)';
+
+      const hash = await hashTexto(input.value);
+      if (hash === ACCESS_HASH) {
+        sessionStorage.setItem(AUTH_KEY, '1');
+        sessionStorage.removeItem('dash_wb_binary');
+        sessionStorage.removeItem('dash_wb_fname');
+        sessionStorage.removeItem('dash_sheet');
+        window.location.href = 'upload.html';
+      } else {
+        statusEl.textContent = 'Senha incorreta. Tente novamente.';
+        statusEl.style.color = 'var(--red)';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    document.getElementById('key-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') verificarSenha();
+    });
+
+    function toggleTema() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      var next = isLight ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      sessionStorage.setItem('dash_theme', next);
+      syncIcones(!isLight);
+    }
+
+    function syncIcones(isLight) {
+      var icon  = document.getElementById('tema-icon');
+      var label = document.getElementById('tema-label');
+      if (isLight) {
+        icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+        label.textContent = 'Escuro';
+      } else {
+        icon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+        label.textContent = 'Claro';
+      }
+    }
+
+    syncIcones(document.documentElement.getAttribute('data-theme') === 'light');
+  </script>
+
+</body>
+</html>

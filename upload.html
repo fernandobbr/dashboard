@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Produção</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    var t = sessionStorage.getItem('dash_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    if (sessionStorage.getItem('dash_auth') !== '1') window.location.replace('login.html');
+  </script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    #uploadScreen {
+      position: static;
+      display: block;
+      background: transparent;
+    }
+
+    .upload-box::before, .upload-box::after { display: none; }
+
+    .theme-toggle-upload {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: all .15s;
+      letter-spacing: 1px;
+    }
+    .theme-toggle-upload:hover { border-color: var(--yellow); color: var(--yellow); }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .upload-lbl {
+      transition: background .4s ease, border-color .4s ease, color .4s ease;
+    }
+
+    .centro-selector {
+      animation: slideDown .35s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    .btn-centro {
+      opacity: 0;
+      animation: slideDown .35s cubic-bezier(.16, 1, .3, 1) both;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="theme-toggle-upload" onclick="toggleTheme(); syncTema()" id="up-theme-btn">☀ CLARO</button>
+
+  <div id="uploadScreen">
+    <div class="upload-box">
+      <span style="font-size:48px;display:block;margin-bottom:20px;">📊</span>
+      <h2>Dashboard Produção</h2>
+      <p>Selecione o arquivo <strong style="color:var(--cyan)">analise_producao.xlsx</strong> exportado do
+        Protheus.<br>Os dados preenchem o dashboard automaticamente.</p>
+      <label class="upload-lbl" id="upload-lbl" for="fileInput">▲ SELECIONAR ARQUIVO EXCEL</label>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
+      <div class="upload-hint">Formatos aceitos: .xlsx · .xls · .csv</div>
+      <div id="errMsg"></div>
+
+      <div class="centro-selector" id="centro-selector" style="display:none">
+        <span class="centro-selector-label">Centro de Trabalho</span>
+        <div class="botoes-centro"></div>
+      </div>
+
+      <div class="col-list">
+        <p>Abas esperadas:</p>
+        <div class="col-tags">
+          <span class="col-tag">dash-montagem</span>
+          <span class="col-tag">dash-solda</span>
+          <span class="col-tag">dash-robo-solda</span>
+        </div>
+      </div>
+
+      <div class="dev-signature">
+        <div class="sig-line"></div>
+        <div class="sig-content">
+          <span class="sig-label">Desenvolvido por</span>
+          <span class="sig-name">Fernando Moraes</span>
+          <span class="sig-dot">·</span>
+          <span class="sig-year">2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function syncTema() {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      document.getElementById('up-theme-btn').textContent = isLight ? '☾ ESCURO' : '☀ CLARO';
+    }
+
+    syncTema();
+
+    document.getElementById('fileInput').addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+
+      var errEl = document.getElementById('errMsg');
+      errEl.style.display = 'none';
+
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        try {
+          var binaryStr = ev.target.result;
+          XLSX.read(binaryStr, { type: 'binary' });
+
+          var sheetAtual = sessionStorage.getItem('dash_sheet') || 'dash-montagem';
+          saveToStorage(binaryStr, file.name, sheetAtual);
+
+          var lbl = document.getElementById('upload-lbl');
+          lbl.textContent = '✔ ' + file.name;
+          lbl.style.background = 'rgba(31,221,158,.1)';
+          lbl.style.borderColor = 'rgba(31,221,158,.4)';
+          lbl.style.color = 'var(--green)';
+
+          var centroEl = document.getElementById('centro-selector');
+          centroEl.style.display = 'block';
+
+          renderCentroButtons('.botoes-centro', function (sheetId) {
+            saveSheetToStorage(sheetId);
+            window.location.href = 'index.html';
+          }, sheetAtual);
+
+          document.querySelectorAll('.btn-centro').forEach(function (btn, i) {
+            btn.style.animationDelay = (80 + i * 80) + 'ms';
+            btn.style.opacity = '1';
+          });
+
+        } catch (err) {
+          errEl.textContent = 'Erro ao ler arquivo: ' + err.message;
+          errEl.style.display = 'block';
+        }
+      };
+      reader.readAsBinaryString(file);
+    });
+  </script>
+
+</body>
+</html>

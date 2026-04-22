@@ -36,19 +36,7 @@ window.onload = function () {
   var savedSheet = sessionStorage.getItem('dash_sheet') || 'dash-montagem';
   _activeSheet = savedSheet;
 
-  /* ── 2. Renderizar botões de centro (upload screen) ── */
-  renderCentroButtons('.botoes-centro', function (sheetName) {
-    _activeSheet = sheetName;
-    saveSheetToStorage(sheetName);
-    if (_sharedWorkbook) {
-      var j = loadSheet(sheetName);
-      if (j) {
-        processData(j, _currentFile);
-        showNavFab();
-      }
-    }
-    renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet);
-  }, _activeSheet);
+  /* ── 2. Seleção de centro feita em upload.html ── */
 
   /* ── 3. Tentar auto-carregar do localStorage ── */
   var cached = loadFromStorage();
@@ -58,6 +46,7 @@ window.onload = function () {
     if (j && j.length) {
       processData(j, cached.fname);
       renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet);
+      adicionarBtnKanban();
       showNavFab();
     } else {
       hideLoading();
@@ -66,64 +55,12 @@ window.onload = function () {
     var gl = document.getElementById('globalLoading'); if (gl) gl.style.display = 'none';
   }
 
-  /* ── 4. Listener de upload ── */
-  document.getElementById('fileInput').onchange = function (e) {
-    var file = e.target.files[0]; if (!file) return; hideErr();
-    
-    var lbl = document.querySelector('.upload-lbl');
-    var oldText = lbl.textContent;
-    lbl.textContent = '⏳ LENDO ARQUIVO...';
-
-    readExcelFile(file, function (wb, fname, binaryStr) {
-      lbl.textContent = '✅ ' + fname;
-      lbl.style.background = 'rgba(31,221,158,0.1)';
-      lbl.style.color = 'var(--green)';
-      lbl.style.borderColor = 'var(--green)';
-
-      /* Apenas persiste no storage sem abrir a tela, aguardando clique no centro */
-      saveToStorage(binaryStr, fname, _activeSheet);
-      
-      var errEl = document.getElementById('errMsg');
-      errEl.textContent = '✔ Arquivo lido! Selecione o Centro de Trabalho abaixo para prosseguir.';
-      errEl.style.display = 'block';
-      errEl.style.color = 'var(--green)';
-      errEl.style.borderColor = 'var(--green)';
-      errEl.style.background = 'rgba(31,221,158,0.1)';
-
-    }, function (err) { 
-      lbl.textContent = oldText;
-      showErr('Erro: ' + err.message); 
-    });
-  };
+  /* ── 4. Listener de upload (removido — upload feito em upload.html) ── */
 
   /* ── 5. Botão "Trocar Arquivo" ── */
   document.getElementById('reloadBtn').onclick = function () {
-    allData = []; filteredData = []; msState = {}; sortCol = ''; sortDir = 1; curPage = 1; grpFiltro = 'todos';
-    document.getElementById('searchInput').value = '';
-    document.getElementById('fileInput').value = '';
-    
-    /* Resetar visual do componente de upload */
-    var lbl = document.querySelector('.upload-lbl');
-    if (lbl) {
-      lbl.textContent = '▲ SELECIONAR ARQUIVO EXCEL';
-      lbl.style.background = '';
-      lbl.style.color = '';
-      lbl.style.borderColor = '';
-    }
-    var errEl = document.getElementById('errMsg');
-    if (errEl) {
-      errEl.style.display = 'none';
-      errEl.textContent = '';
-      errEl.style.background = '';
-      errEl.style.color = '';
-      errEl.style.borderColor = '';
-    }
-
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('uploadScreen').style.display = 'flex';
-    hideNavFab();
     clearStorage();
-    _sharedWorkbook = null; /* Limpa o arquivo da memória */
+    window.location.href = 'upload.html';
   };
 
   document.addEventListener('click', function (e) {
@@ -139,7 +76,7 @@ window.onload = function () {
     if (e.key === 'Escape' && document.getElementById('modalOverlay').classList.contains('open')) closeModal();
     if (e.key === 'F11' && document.getElementById('modalOverlay').classList.contains('open')) { e.preventDefault(); toggleExpand(); }
   });
-  if (window.DEV_MODE) { processData(window.MOCK_DATA, 'mock_dados.xlsx'); renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet); showNavFab(); }
+  if (window.DEV_MODE) { processData(window.MOCK_DATA, 'mock_dados.xlsx'); renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet); adicionarBtnKanban(); showNavFab(); }
 
   /* ── 6. Mostrar Changelog V4.3 no primeiro acesso ── */
   setTimeout(function() {
@@ -149,6 +86,19 @@ window.onload = function () {
     }
   }, 600);
 };
+
+function adicionarBtnKanban() {
+  var bar = document.querySelector('.dash-centro-bar');
+  if (!bar || bar.querySelector('.btn-kanban-link')) return;
+  var sep = document.createElement('div');
+  sep.style.cssText = 'width:1px;height:18px;background:var(--border);margin:0 6px;flex-shrink:0';
+  var btn = document.createElement('a');
+  btn.href = 'kanban_usinagem.html';
+  btn.className = 'btn-centro-sm btn-kanban-link';
+  btn.innerHTML = '<img src="assets/img/maquina-de-torno.png" alt="Usinagem"><span>Usinagem</span>';
+  bar.appendChild(sep);
+  bar.appendChild(btn);
+}
 
 function onCentroBarSelect(sheetName) {
   if (!_sharedWorkbook) return;
@@ -207,7 +157,6 @@ function processData(json, fname) {
   var nd = fname.replace(/\.[^.]+$/, '').replace(/^dash_/i, '').replace(/_/g, ' ').toUpperCase();
   document.getElementById('dashTitle').innerHTML = '<span style="color:var(--cyan)">F1</span><span style="color:var(--cyan);margin:0 8px">◈</span><span style="color:var(--cyan)">DASHBOARD ' + nd + '</span>';
   document.querySelector('.file-info').textContent = fname;
-  document.getElementById('uploadScreen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   var gl = document.getElementById('globalLoading'); if (gl) gl.style.display = 'none';
   populateFilters(); applyFilters();

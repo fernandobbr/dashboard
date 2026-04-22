@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Produção — Manutenção</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .maint-card {
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--frame-border);
+      border-top: 2px solid var(--cyan);
+      border-radius: 2px;
+      background: linear-gradient(160deg, var(--s1) 0%, var(--s2) 100%);
+      box-shadow: 0 0 0 1px rgba(0, 212, 255, .04),
+        0 32px 72px rgba(0, 0, 0, .6),
+        inset 0 1px 0 rgba(0, 212, 255, .07);
+      overflow: hidden;
+    }
+
+    .maint-body {
+      padding: 48px 40px 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      text-align: center;
+    }
+
+    .maint-icon-wrap {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .maint-icon {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      filter: brightness(0) invert(1) opacity(.6);
+      animation: spin 4s linear infinite;
+    }
+
+    [data-theme="light"] .maint-icon {
+      filter: brightness(0) opacity(.45);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .maint-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    .maint-title {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.3px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .maint-desc {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 300px;
+    }
+
+    .maint-return-box {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--s2);
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .maint-return-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .maint-return-time {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+
+    .maint-clock {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="maint-card">
+    <div class="maint-body">
+      <div class="maint-icon-wrap">
+        <img class="maint-icon" src="assets/img/gear.png" alt="">
+      </div>
+      <div class="maint-eyebrow">Dashboard Produção</div>
+      <div class="maint-title">Sistema em Manutenção</div>
+      <div class="maint-desc">
+        Realizando melhorias no sistema.<br>
+        Agradeço a compreensão.
+      </div>
+      <div class="maint-return-box">
+        <div class="maint-return-label">Retorno previsto</div>
+        <div class="maint-return-time">15:00</div>
+        <div class="maint-clock" id="maint-clock">—</div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script>
+    function atualizarRelogio() {
+      var agora = new Date();
+      var h = String(agora.getHours()).padStart(2, '0');
+      var m = String(agora.getMinutes()).padStart(2, '0');
+      var s = String(agora.getSeconds()).padStart(2, '0');
+      document.getElementById('maint-clock').textContent = 'Agora: ' + h + ':' + m + ':' + s;
+    }
+    atualizarRelogio();
+    setInterval(atualizarRelogio, 1000);
+  </script>
+
+</body>
+
+</html>
