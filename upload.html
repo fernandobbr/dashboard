@@ -158,7 +158,8 @@
       reader.onload = function (ev) {
         try {
           var binaryStr = ev.target.result;
-          XLSX.read(binaryStr, { type: 'binary' });
+          // Removemos a leitura de teste para ganhar performance no upload
+          // XLSX.read(binaryStr, { type: 'binary' });
 
           var sheetAtual = sessionStorage.getItem('dash_sheet') || 'dash-montagem';
           saveToStorage(binaryStr, file.name, sheetAtual);

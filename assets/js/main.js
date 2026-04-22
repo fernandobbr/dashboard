@@ -63,7 +63,13 @@ function loadFromStorage() {
     var sheet = sessionStorage.getItem('dash_sheet') || 'dash-montagem';
     if (!b64) return null;
     var binary = atob(b64);
-    var wb = XLSX.read(binary, { type: 'binary' });
+    var wb = XLSX.read(binary, { 
+      type: 'binary',
+      cellFormula: false,
+      cellHTML: false,
+      cellText: false,
+      cellDates: true
+    });
     _sharedWorkbook = wb;
     _currentFile = fname;
     return { wb: wb, fname: fname, sheetName: sheet };

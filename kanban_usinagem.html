@@ -1107,7 +1107,13 @@
 
     // ── PROCESSAR XLSX ───────────────────────────────────────────────
     function processarXlsx(binaryStr) {
-      const wb = XLSX.read(binaryStr, { type: 'binary' });
+      const wb = XLSX.read(binaryStr, { 
+        type: 'binary',
+        cellFormula: false,
+        cellHTML: false,
+        cellText: false,
+        cellDates: true
+      });
 
       console.log('[Kanban Usinagem] Abas disponíveis:', wb.SheetNames.join(', '));
 
