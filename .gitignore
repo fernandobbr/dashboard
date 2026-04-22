@@ -1,14 +1,31 @@
-# Dados sensíveis — não subir para o repositório
+# Dados sensíveis (Planilhas de Produção)
 *.xlsx
 *.xls
 *.csv
+*.xlsm
 
-# Sistema operacional
+# Logs e Temporários
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.tmp/
+temp/
+
+# Sistema Operacional
 Thumbs.db
 .DS_Store
 desktop.ini
+$RECYCLE.BIN/
 
-# Editores
+# Editores e IDEs
 .vscode/
+.idea/
 *.suo
-*.user
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Arquivos de rascunho
+stylerules.md

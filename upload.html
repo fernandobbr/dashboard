@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Produção</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="assets/css/global.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="assets/js/main.js"></script>
@@ -30,7 +32,10 @@
       background: transparent;
     }
 
-    .upload-box::before, .upload-box::after { display: none; }
+    .upload-box::before,
+    .upload-box::after {
+      display: none;
+    }
 
     .theme-toggle-upload {
       position: fixed;
@@ -46,13 +51,18 @@
       transition: all .15s;
       letter-spacing: 1px;
     }
-    .theme-toggle-upload:hover { border-color: var(--yellow); color: var(--yellow); }
+
+    .theme-toggle-upload:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
 
     @keyframes slideDown {
       from {
         opacity: 0;
         transform: translateY(-10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -80,7 +90,7 @@
 
   <div id="uploadScreen">
     <div class="upload-box">
-      <span style="font-size:48px;display:block;margin-bottom:20px;">📊</span>
+      <img src="assets/img/statistics.png" class="upload-icon" alt="">
       <h2>Dashboard Produção</h2>
       <p>Selecione o arquivo <strong style="color:var(--cyan)">analise_producao.xlsx</strong> exportado do
         Protheus.<br>Os dados preenchem o dashboard automaticamente.</p>
@@ -100,10 +110,23 @@
           <span class="col-tag">dash-montagem</span>
           <span class="col-tag">dash-solda</span>
           <span class="col-tag">dash-robo-solda</span>
-          <span class="col-tag">estoque</span>
+          <span class="col-tag">estoque_kanban</span>
         </div>
       </div>
 
+      <div class="clog-lite">
+        <div class="clog-lite-title">O que foi estruturado:</div>
+        <div class="clog-lite-list">
+          <div class="clog-lite-item"><span>◈</span>
+            <div><strong>Kanban Usinagem:</strong> Novo controle de estoque. <span
+                style="font-size:8px; color:var(--yellow); border:1px solid var(--yellow); padding:0 4px; border-radius:2px; margin-left:4px; font-weight:700;">EM
+                TESTE</span></div>
+          </div>
+          <div class="clog-lite-item"><span>◈</span>
+            <div><strong>Documentação:</strong> Fluxograma técnico de processos estruturado.</div>
+          </div>
+        </div>
+      </div>
       <div class="dev-signature">
         <div class="sig-line"></div>
         <div class="sig-content">
@@ -169,4 +192,5 @@
   </script>
 
 </body>
+
 </html>

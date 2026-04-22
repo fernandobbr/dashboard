@@ -32,7 +32,7 @@ var _currentFile = null;      /* nome do arquivo carregado */
  */
 function saveToStorage(binaryStr, fname, sheetName) {
   try {
-    sessionStorage.setItem('dash_wb_binary', btoa(binaryStr));
+    sessionStorage.setItem('dash_wb_binary', btoa(unescape(encodeURIComponent(binaryStr))));
     sessionStorage.setItem('dash_wb_fname', fname || '');
     sessionStorage.setItem('dash_sheet', sheetName || 'dash-montagem');
   } catch (e) {
@@ -62,7 +62,7 @@ function loadFromStorage() {
     var fname = sessionStorage.getItem('dash_wb_fname') || '';
     var sheet = sessionStorage.getItem('dash_sheet') || 'dash-montagem';
     if (!b64) return null;
-    var binary = atob(b64);
+    var binary = decodeURIComponent(escape(atob(b64)));
     var wb = XLSX.read(binary, { type: 'binary' });
     _sharedWorkbook = wb;
     _currentFile = fname;

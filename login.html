@@ -12,7 +12,7 @@
     var _t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', _t);
     var _h = window.location.hostname;
-    if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
+    // if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
   </script>
   <style>
     body {
@@ -93,19 +93,29 @@
 
     .login-brand-name {
       font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -.2px;
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--text) 30%, var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      padding: 2px 0;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
     }
 
     .login-brand-sub {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
+      font-size: 10px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--cyan);
+      font-weight: 600;
+      margin-top: 2px;
     }
+
 
     /* ── FORM ── */
     .login-card-body {
@@ -228,7 +238,7 @@
     <!-- FOOTER -->
     <div class="login-card-footer">
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:100%">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-align:center;line-height:1.6;letter-spacing:.3px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#cc0000;text-align:center;line-height:1.6;letter-spacing:.3px;font-weight:700;">
           A senha de acesso é gerada pelo administrador do dashboard.<br>
           Caso não possua acesso, entre em contato com o responsável.
         </div>
@@ -239,7 +249,6 @@
             <span class="sig-dot">·</span>
             <span class="sig-year">2026</span>
           </div>
-          <div style="text-align:center;margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--red)">Consilos</div>
         </div>
       </div>
     </div>

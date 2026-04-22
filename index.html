@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="assets/css/dashboard.css">
   <script>
     var _h = window.location.hostname;
-    if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
+    // if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
     if (sessionStorage.getItem('dash_auth') !== '1') window.location.replace('login.html');
     var _t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', _t);
@@ -27,7 +27,7 @@
     if (!sessionStorage.getItem('dash_wb_binary')) {
       window.location.replace('upload.html');
     } else {
-      document.write('<div id="globalLoading" class="global-loading"><span class="global-loading-icon">◈</span><span class="global-loading-text">CARREGANDO DADOS...</span></div>');
+      document.write('<div id="globalLoading" class="global-loading"><img class="global-loading-icon" src="assets/img/gear.png" alt=""><span class="global-loading-text">CARREGANDO DADOS...</span></div>');
     }
   </script>
 

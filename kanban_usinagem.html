@@ -884,7 +884,10 @@
         <div class="header-left">
           <img src="assets/img/maquina-de-torno.png" class="panel-icon" alt="">
           <div>
-            <div class="panel-title">Kanban Usinagem</div>
+            <div class="panel-title" style="display:flex; align-items:center; gap:8px;">
+              Kanban Usinagem
+              <span style="font-size:8px; color:var(--yellow); border:1px solid var(--yellow); padding:0 4px; border-radius:1px; font-weight:700; letter-spacing:0;">EM TESTE</span>
+            </div>
             <div class="panel-subtitle" id="panel-subtitle">CONTROLE DE ESTOQUE — 0 itens</div>
           </div>
         </div>
@@ -1083,18 +1086,18 @@
 
       console.log('[Kanban Usinagem] Abas disponíveis:', wb.SheetNames.join(', '));
 
-      const found = wb.SheetNames.find(n => n.trim().toLowerCase() === 'estoque');
+      const found = wb.SheetNames.find(n => n.trim().toLowerCase() === 'estoque_kanban');
 
       if (!found) {
         document.getElementById('bar-list').innerHTML = `
           <div style="padding:32px 0;text-align:center;">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--yellow);margin-bottom:10px;">ABA NÃO ENCONTRADA</div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);line-height:1.8;">
-              O arquivo carregado não contém a aba <span style="color:var(--cyan)">"Estoque"</span>.<br>
+              O arquivo carregado não contém a aba <span style="color:var(--cyan)">"estoque_kanban"</span>.<br>
               Abas disponíveis: <span style="color:var(--text)">${wb.SheetNames.join(', ')}</span>
             </div>
           </div>`;
-        document.getElementById('panel-subtitle').textContent = 'ABA "ESTOQUE" NÃO ENCONTRADA';
+        document.getElementById('panel-subtitle').textContent = 'ABA "ESTOQUE_KANBAN" NÃO ENCONTRADA';
         return;
       }
 
@@ -1139,9 +1142,11 @@
       const b64 = sessionStorage.getItem('dash_wb_binary');
       if (!b64) { window.location.replace('upload.html'); return; }
       try {
-        processarXlsx(atob(b64));
+        /* Decodifica usando o inverso de btoa(unescape(encodeURIComponent(...))) do main.js */
+        const binary = decodeURIComponent(escape(atob(b64)));
+        processarXlsx(binary);
       } catch (e) {
-        console.error('[Kanban] Falha ao carregar:', e);
+        console.error('[Kanban] Falha ao decodificar arquivo:', e.message);
         window.location.replace('upload.html');
       }
     })();
