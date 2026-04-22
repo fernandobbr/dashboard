@@ -1139,7 +1139,7 @@
       const b64 = sessionStorage.getItem('dash_wb_binary');
       if (!b64) { window.location.replace('upload.html'); return; }
       try {
-        processarXlsx(decodeURIComponent(escape(atob(b64))));
+        processarXlsx(atob(b64));
       } catch (e) {
         console.error('[Kanban] Falha ao carregar:', e);
         window.location.replace('upload.html');
