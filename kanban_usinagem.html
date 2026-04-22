@@ -1080,11 +1080,28 @@
     // ── PROCESSAR XLSX ───────────────────────────────────────────────
     function processarXlsx(binaryStr) {
       const wb = XLSX.read(binaryStr, { type: 'binary' });
-      const sheetName = wb.SheetNames.find(n => n.trim().toLowerCase() === 'estoque') || wb.SheetNames[0];
-      const ws = wb.Sheets[sheetName];
+
+      console.log('[Kanban Usinagem] Abas disponíveis:', wb.SheetNames.join(', '));
+
+      const found = wb.SheetNames.find(n => n.trim().toLowerCase() === 'estoque');
+
+      if (!found) {
+        document.getElementById('bar-list').innerHTML = `
+          <div style="padding:32px 0;text-align:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--yellow);margin-bottom:10px;">ABA NÃO ENCONTRADA</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);line-height:1.8;">
+              O arquivo carregado não contém a aba <span style="color:var(--cyan)">"Estoque"</span>.<br>
+              Abas disponíveis: <span style="color:var(--text)">${wb.SheetNames.join(', ')}</span>
+            </div>
+          </div>`;
+        document.getElementById('panel-subtitle').textContent = 'ABA "ESTOQUE" NÃO ENCONTRADA';
+        return;
+      }
+
+      const ws = wb.Sheets[found];
       const raw = XLSX.utils.sheet_to_json(ws, { defval: '' });
 
-      console.log('[Kanban Usinagem] Aba:', sheetName, '| Linhas:', raw.length);
+      console.log('[Kanban Usinagem] Aba:', found, '| Linhas:', raw.length);
       if (raw.length) console.log('[Kanban Usinagem] Colunas detectadas:', Object.keys(raw[0]));
 
       const items = raw.map(row => {
