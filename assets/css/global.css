@@ -345,6 +345,9 @@ html, body {
   color: var(--text, #dce6f5);
   text-transform: uppercase;
 }
+[data-theme="light"] .global-loading-text {
+  color: #000000;
+}
 
 /* ══════════════════════════════════════════
    SELETOR DE CENTRO NO DASHBOARD (BARRA)

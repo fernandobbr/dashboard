@@ -869,10 +869,35 @@
       border-top: 1px solid var(--border);
       line-height: 1.4;
     }
+
+    /* ── LOADING ── */
+    .global-loading {
+      position: fixed; inset: 0; z-index: 999;
+      background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    }
+    .global-loading-icon {
+      width: 48px; height: 48px; object-fit: contain;
+      filter: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(160deg);
+      opacity: 0.85;
+      animation: global-spin 2.5s linear infinite;
+    }
+    [data-theme="light"] .global-loading-icon { filter: brightness(0); opacity: 1; }
+    .global-loading-text {
+      font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600;
+      color: var(--cyan); letter-spacing: 2px;
+    }
+    [data-theme="light"] .global-loading-text { color: #000000; }
+    @keyframes global-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   </style>
 </head>
 
 <body>
+  <!-- LOADING -->
+  <div id="globalLoading" class="global-loading">
+    <img class="global-loading-icon" src="assets/img/gear.png" alt="">
+    <span class="global-loading-text">CARREGANDO DADOS...</span>
+  </div>
 
   <!-- KANBAN PANEL -->
   <div id="kanban-panel">
@@ -1140,14 +1165,41 @@
     // ── INIT — lê arquivo do sessionStorage compartilhado ────────────
     (function init() {
       const b64 = sessionStorage.getItem('dash_wb_binary');
-      if (!b64) { window.location.replace('upload.html'); return; }
+      const list = document.getElementById('bar-list');
+      
+      if (!b64) { 
+        console.warn('[Kanban] Nenhum dado encontrado no sessionStorage.');
+        window.location.replace('upload.html'); 
+        return; 
+      }
+
       try {
-        /* Decodifica usando o inverso de btoa(unescape(encodeURIComponent(...))) do main.js */
-        const binary = decodeURIComponent(escape(atob(b64)));
+        console.log('[Kanban] Tamanho do Base64 recuperado:', (b64.length / 1024 / 1024).toFixed(2), 'MB');
+        
+        /* Decodifica usando atob puro */
+        const binary = atob(b64);
         processarXlsx(binary);
+        
+        // Esconde loading após processar
+        setTimeout(() => {
+          const loader = document.getElementById('globalLoading');
+          if (loader) loader.style.display = 'none';
+        }, 800);
+        
       } catch (e) {
-        console.error('[Kanban] Falha ao decodificar arquivo:', e.message);
-        window.location.replace('upload.html');
+        console.error('[Kanban] Erro crítico:', e);
+        if (list) {
+          list.innerHTML = `
+            <div style="padding:40px; text-align:center; color:var(--red); font-family:'IBM Plex Mono',monospace;">
+              <div style="font-size:14px; font-weight:700; margin-bottom:15px;">⚠️ FALHA NO CARREGAMENTO</div>
+              <div style="font-size:12px; color:var(--text2); line-height:1.6;">
+                Não foi possível processar os dados do Excel.<br>
+                <strong>Erro:</strong> ${e.message}<br><br>
+                <button onclick="window.location.href='upload.html'" style="background:var(--red); color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:700;">VOLTAR E TENTAR NOVAMENTE</button>
+              </div>
+            </div>
+          `;
+        }
       }
     })();
 
@@ -1306,12 +1358,11 @@
     function hideTooltip() { tooltip.classList.remove('visible'); }
 
     // ── PAINEL DE NOTIFICAÇÕES ───────────────────────────────────────
-    let notifDelay = 0;
 
     function notificarEstoque(items) {
       const list = document.getElementById('notif-list');
       list.innerHTML = '';
-      notifDelay = 0;
+      let notifDelay = 0;
 
       const alertas = [];
       items.forEach(i => {
