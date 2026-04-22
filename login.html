@@ -11,7 +11,8 @@
   <script>
     var _t = sessionStorage.getItem('dash_theme') || 'dark';
     document.documentElement.setAttribute('data-theme', _t);
-    if (!localStorage.getItem('dash_preview')) window.location.replace('maintenance.html');
+    var _h = window.location.hostname;
+    if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
   </script>
   <style>
     body {
