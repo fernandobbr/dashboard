@@ -406,7 +406,7 @@ function renderCentroBar(containerSelector, onSelect, currentSheet) {
  * Chamar no início de cada página (window.onload ou inline).
  */
 function initTheme() {
-  var theme = sessionStorage.getItem('dash_theme') || 'dark';
+  var theme = sessionStorage.getItem('dash_theme') || 'light';
   document.documentElement.setAttribute('data-theme', theme);
   _updateThemeBtn(theme);
 }
@@ -415,7 +415,7 @@ function initTheme() {
  * Alterna entre claro e escuro, salva e atualiza o botão.
  */
 function toggleTheme() {
-  var current = document.documentElement.getAttribute('data-theme') || 'dark';
+  var current = document.documentElement.getAttribute('data-theme') || 'light';
   var next = current === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', next);
   sessionStorage.setItem('dash_theme', next);

@@ -11,7 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
-    var t = sessionStorage.getItem('dash_theme') || 'dark';
+    var t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', t);
     if (sessionStorage.getItem('dash_auth') !== '1') window.location.replace('login.html');
   </script>

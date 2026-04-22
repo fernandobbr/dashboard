@@ -15,7 +15,7 @@
     var _h = window.location.hostname;
     if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
     if (sessionStorage.getItem('dash_auth') !== '1') window.location.replace('login.html');
-    var _t = sessionStorage.getItem('dash_theme') || 'dark';
+    var _t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', _t);
   </script>
 </head>
