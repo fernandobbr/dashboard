@@ -46,7 +46,7 @@ window.onload = function () {
     if (j && j.length) {
       processData(j, cached.fname);
       renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet);
-      adicionarBtnKanban();
+
       showNavFab();
     } else {
       hideLoading();
@@ -87,20 +87,11 @@ window.onload = function () {
   }, 600);
 };
 
-function adicionarBtnKanban() {
-  var bar = document.querySelector('.dash-centro-bar');
-  if (!bar || bar.querySelector('.btn-kanban-link')) return;
-  var sep = document.createElement('div');
-  sep.style.cssText = 'width:1px;height:18px;background:var(--border);margin:0 6px;flex-shrink:0';
-  var btn = document.createElement('a');
-  btn.href = 'kanban_usinagem.html';
-  btn.className = 'btn-centro-sm btn-kanban-link';
-  btn.innerHTML = '<img src="assets/img/maquina-de-torno.png" alt="Usinagem"><span>Usinagem</span>';
-  bar.appendChild(sep);
-  bar.appendChild(btn);
-}
-
 function onCentroBarSelect(sheetName) {
+  if (sheetName === 'kanban-usinagem') {
+    window.location.href = 'kanban_usinagem.html';
+    return;
+  }
   if (!_sharedWorkbook) return;
   _activeSheet = sheetName;
   saveSheetToStorage(sheetName);

@@ -151,7 +151,7 @@
 
           renderCentroButtons('.botoes-centro', function (sheetId) {
             saveSheetToStorage(sheetId);
-            window.location.href = 'index.html';
+            window.location.href = sheetId === 'kanban-usinagem' ? 'kanban_usinagem.html' : 'index.html';
           }, sheetAtual);
 
           document.querySelectorAll('.btn-centro').forEach(function (btn, i) {

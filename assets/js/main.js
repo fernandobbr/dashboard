@@ -335,9 +335,10 @@ function getSheetNames() {
 ══════════════════════════════════════════ */
 
 var CENTROS = [
-  { id: 'dash-montagem', label: 'Montagem', img: 'assets/img/chave-inglesa.png' },
-  { id: 'dash-solda', label: 'Solda', img: 'assets/img/mascara-de-solda.png' },
-  { id: 'dash-robo-solda', label: 'Robô de Solda', img: 'assets/img/robo-de-solda.png' },
+  { id: 'dash-montagem',   label: 'Montagem',      img: 'assets/img/chave-inglesa.png' },
+  { id: 'dash-solda',      label: 'Solda',          img: 'assets/img/mascara-de-solda.png' },
+  { id: 'dash-robo-solda', label: 'Robô de Solda',  img: 'assets/img/robo-de-solda.png' },
+  { id: 'kanban-usinagem', label: 'Usinagem',        img: 'assets/img/maquina-de-torno.png' },
 ];
 
 /**
