@@ -1115,8 +1115,6 @@
         cellDates: true
       });
 
-      console.log('[Kanban Usinagem] Abas disponíveis:', wb.SheetNames.join(', '));
-
       const found = wb.SheetNames.find(n => n.trim().toLowerCase() === 'estoque_kanban');
 
       if (!found) {
@@ -1124,39 +1122,56 @@
           <div style="padding:32px 0;text-align:center;">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--yellow);margin-bottom:10px;">ABA NÃO ENCONTRADA</div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);line-height:1.8;">
-              O arquivo carregado não contém a aba <span style="color:var(--cyan)">"estoque_kanban"</span>.<br>
+              O arquivo carregado não contém a aba <span style="color:var(--cyan)">\"estoque_kanban\"</span>.<br>
               Abas disponíveis: <span style="color:var(--text)">${wb.SheetNames.join(', ')}</span>
             </div>
           </div>`;
-        document.getElementById('panel-subtitle').textContent = 'ABA "ESTOQUE_KANBAN" NÃO ENCONTRADA';
+        document.getElementById('panel-subtitle').textContent = 'ABA \"ESTOQUE_KANBAN\" NÃO ENCONTRADA';
         return;
       }
 
       const ws = wb.Sheets[found];
-      const raw = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      // header: 1 retorna uma matriz de arrays - MUITO mais rápido
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
 
-      console.log('[Kanban Usinagem] Aba:', found, '| Linhas:', raw.length);
-      if (raw.length) console.log('[Kanban Usinagem] Colunas detectadas:', Object.keys(raw[0]));
+      if (data.length < 1) {
+        document.getElementById('panel-subtitle').textContent = 'ABA VAZIA';
+        return;
+      }
 
-      const items = raw.map(row => {
-        const mapped = {};
-        Object.keys(row).forEach(k => { mapped[normKey(k)] = row[k]; });
-        return {
-          cod:    String(mapped['CODIGO'] || mapped['COD'] || mapped['B1_COD'] || mapped['PRODUTO'] || '').trim(),
-          desc:   String(mapped['DESCRICAO'] || mapped['DESC'] || mapped['B1_DESC'] || '').trim(),
-          atual:  parseFloat(mapped['QUANTIDADE'] || mapped['QTD'] || mapped['B2_QATU'] || mapped['SALDO'] || 0) || 0,
-          qtdOps: parseInt(mapped['QTD_OPS_ABERTO'] || mapped['QTD_OP'] || 0) || 0,
-          ops:    String(mapped['OPS_EM_ABERTO'] || mapped['OPS'] || mapped['OP'] || '').trim(),
-        };
-      }).filter(i => i.cod);
+      // 1. Identifica os índices das colunas no cabeçalho (primeira linha)
+      const header = data[0].map(h => normKey(String(h)));
+      const idx = {
+        cod:    header.findIndex(h => ['CODIGO','COD','B1_COD','PRODUTO'].includes(h)),
+        desc:   header.findIndex(h => ['DESCRICAO','DESC','B1_DESC'].includes(h)),
+        atual:  header.findIndex(h => ['QUANTIDADE','QTD','B2_QATU','SALDO','ATUAL'].includes(h)),
+        qtdOps: header.findIndex(h => ['QTD_OPS_ABERTO','QTD_OP'].includes(h)),
+        ops:    header.findIndex(h => ['OPS_EM_ABERTO','OPS','OP'].includes(h))
+      };
 
-      if (!items.length && raw.length) {
-        const cols = raw.length ? Object.keys(raw[0]).join(', ') : '—';
+      // 2. Extrai os dados usando os índices (evita criar milhares de objetos)
+      const items = [];
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        const cod = idx.cod !== -1 ? String(row[idx.cod] || '').trim() : '';
+        if (!cod) continue;
+
+        items.push({
+          cod:    cod,
+          desc:   idx.desc !== -1 ? String(row[idx.desc] || '').trim() : '',
+          atual:  idx.atual !== -1 ? (parseFloat(row[idx.atual]) || 0) : 0,
+          qtdOps: idx.qtdOps !== -1 ? (parseInt(row[idx.qtdOps]) || 0) : 0,
+          ops:    idx.ops !== -1 ? String(row[idx.ops] || '').trim() : ''
+        });
+      }
+
+      if (!items.length && data.length > 1) {
+        const cols = data[0].join(', ');
         document.getElementById('bar-list').innerHTML = `
           <div style="padding:32px 0;text-align:center;">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--yellow);margin-bottom:10px;">COLUNAS NÃO RECONHECIDAS</div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);line-height:1.8;">
-              Aba <span style="color:var(--cyan)">"Estoque"</span> encontrada com <strong style="color:var(--text)">${raw.length}</strong> linhas, mas nenhum item reconhecido.<br><br>
+              Aba encontrada com <strong style="color:var(--text)">${data.length - 1}</strong> linhas, mas nenhum item reconhecido.<br><br>
               <span style="color:var(--muted)">Colunas detectadas:</span><br>
               <span style="color:var(--text)">${cols}</span>
             </div>
