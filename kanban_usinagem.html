@@ -1108,13 +1108,28 @@
         const mapped = {};
         Object.keys(row).forEach(k => { mapped[normKey(k)] = row[k]; });
         return {
-          cod:    String(mapped['CODIGO'] || mapped['COD'] || '').trim(),
-          desc:   String(mapped['DESCRICAO'] || '').trim(),
-          atual:  parseFloat(mapped['QUANTIDADE'] || mapped['QTD'] || 0) || 0,
-          qtdOps: parseInt(mapped['QTD_OPS_ABERTO'] || 0) || 0,
-          ops:    String(mapped['OPS_EM_ABERTO'] || '').trim(),
+          cod:    String(mapped['CODIGO'] || mapped['COD'] || mapped['B1_COD'] || mapped['PRODUTO'] || '').trim(),
+          desc:   String(mapped['DESCRICAO'] || mapped['DESC'] || mapped['B1_DESC'] || '').trim(),
+          atual:  parseFloat(mapped['QUANTIDADE'] || mapped['QTD'] || mapped['B2_QATU'] || mapped['SALDO'] || 0) || 0,
+          qtdOps: parseInt(mapped['QTD_OPS_ABERTO'] || mapped['QTD_OP'] || 0) || 0,
+          ops:    String(mapped['OPS_EM_ABERTO'] || mapped['OPS'] || mapped['OP'] || '').trim(),
         };
       }).filter(i => i.cod);
+
+      if (!items.length && raw.length) {
+        const cols = raw.length ? Object.keys(raw[0]).join(', ') : '—';
+        document.getElementById('bar-list').innerHTML = `
+          <div style="padding:32px 0;text-align:center;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--yellow);margin-bottom:10px;">COLUNAS NÃO RECONHECIDAS</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text2);line-height:1.8;">
+              Aba <span style="color:var(--cyan)">"Estoque"</span> encontrada com <strong style="color:var(--text)">${raw.length}</strong> linhas, mas nenhum item reconhecido.<br><br>
+              <span style="color:var(--muted)">Colunas detectadas:</span><br>
+              <span style="color:var(--text)">${cols}</span>
+            </div>
+          </div>`;
+        document.getElementById('panel-subtitle').textContent = 'COLUNAS NÃO RECONHECIDAS';
+        return;
+      }
 
       renderKanban(items);
     }
