@@ -22,14 +22,11 @@
 
 <body>
 
-  <!-- Redireciona para upload.html se não houver arquivo carregado -->
-  <script>
-    if (!sessionStorage.getItem('dash_wb_binary')) {
-      window.location.replace('upload.html');
-    } else {
-      document.write('<div id="globalLoading" class="global-loading"><img class="global-loading-icon" src="assets/img/gear.png" alt=""><span class="global-loading-text">CARREGANDO DADOS...</span></div>');
-    }
-  </script>
+  <!-- LOADING -->
+  <div id="globalLoading" class="global-loading">
+    <img class="global-loading-icon" src="assets/img/gear.png" alt="">
+    <span class="global-loading-text">CARREGANDO DADOS...</span>
+  </div>
 
   <!-- ══════════════════════════════════════════
      DASHBOARD PRINCIPAL

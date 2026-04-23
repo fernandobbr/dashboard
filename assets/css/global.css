@@ -349,6 +349,11 @@ html, body {
   color: #000000;
 }
 
+@keyframes global-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* ══════════════════════════════════════════
    SELETOR DE CENTRO NO DASHBOARD (BARRA)
 ══════════════════════════════════════════ */

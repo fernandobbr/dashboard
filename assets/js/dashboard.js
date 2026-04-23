@@ -38,7 +38,7 @@ window.onload = function () {
 
   /* ── 2. Seleção de centro feita em upload.html ── */
 
-  /* ── 3. Tentar auto-carregar do localStorage ── */
+  /* ── 3. Tentar auto-carregar do sessionStorage ── */
   var cached = loadFromStorage();
   if (cached) {
     _activeSheet = cached.sheetName;
@@ -46,13 +46,18 @@ window.onload = function () {
     if (j && j.length) {
       processData(j, cached.fname);
       renderCentroBar('.dash-centro-bar', onCentroBarSelect, _activeSheet);
-
       showNavFab();
+
+      // Esconde o loading após um delay para suavizar
+      setTimeout(function() {
+        var gl = document.getElementById('globalLoading');
+        if (gl) gl.style.display = 'none';
+      }, 800);
     } else {
-      hideLoading();
+      window.location.replace('upload.html');
     }
   } else {
-    var gl = document.getElementById('globalLoading'); if (gl) gl.style.display = 'none';
+    window.location.replace('upload.html');
   }
 
   /* ── 4. Listener de upload (removido — upload feito em upload.html) ── */
@@ -149,7 +154,6 @@ function processData(json, fname) {
   document.getElementById('dashTitle').innerHTML = '<span style="color:var(--cyan)">F1</span><span style="color:var(--cyan);margin:0 8px">◈</span><span style="color:var(--cyan)">DASHBOARD ' + nd + '</span>';
   document.querySelector('.file-info').textContent = fname;
   document.getElementById('dashboard').style.display = 'block';
-  var gl = document.getElementById('globalLoading'); if (gl) gl.style.display = 'none';
   populateFilters(); applyFilters();
 }
 
