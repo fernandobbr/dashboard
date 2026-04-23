@@ -24,7 +24,6 @@
       --yellow: #f5c842;
       --green: #00D4A2;
       --red: #ff4d6d;
-      --orange: #ff7a35;
       --muted: #4a5a7a;
       --text: #e2e8f0;
       --text2: #8a9bbf;
@@ -42,7 +41,6 @@
       --yellow: #c47d00;
       --green: #007a5e;
       --red: #c0243e;
-      --orange: #c45200;
       --muted: #1a2030;
       --text: #0a0f18;
       --text2: #1a2030;
@@ -51,7 +49,6 @@
       --icon-filter-hover: brightness(0) opacity(0.85);
     }
 
-    [data-theme="light"] .upload-box,
     [data-theme="light"] .panel-frame {
       box-shadow: 0 0 0 1px rgba(0, 100, 200, 0.06),
         0 2px 20px rgba(0, 0, 0, 0.08),
@@ -117,6 +114,7 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
+      gap: 16px;
       padding: 24px 16px;
       scrollbar-width: thin;
       scrollbar-color: rgba(0, 212, 255, .4) var(--bg);
@@ -183,10 +181,11 @@
       border-top: 2px solid var(--cyan);
       background: var(--s1);
       border-bottom: 1px solid var(--border);
-      padding: 12px 18px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .header-left {
@@ -215,40 +214,45 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .panel-subtitle {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+    .badge-items {
+      font-size: 9px;
       color: var(--muted);
-      letter-spacing: 1px;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 2px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .header-legend {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-shrink: 0;
+      margin-right: auto;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 9px;
-      letter-spacing: 1px;
-      color: var(--muted);
-    }
-
-    .header-legend .legend-item {
+      letter-spacing: 0.5px;
       color: var(--text);
     }
 
-    [data-theme="light"] .header-legend .legend-item {
-      color: var(--text);
+    .legend-count {
+      font-weight: 700;
+      font-size: 11px;
+      margin-left: 2px;
     }
-
 
     .legend-dot {
       width: 7px;
@@ -299,6 +303,7 @@
       border-bottom: 1px solid var(--border);
       margin-bottom: 4px;
     }
+
     .bar-header-col {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 8px;
@@ -307,8 +312,14 @@
       text-transform: uppercase;
       color: var(--muted);
     }
-    .bar-header-col.center { text-align: center; }
-    .bar-header-col.right  { text-align: right; }
+
+    .bar-header-col.center {
+      text-align: center;
+    }
+
+    .bar-header-col.right {
+      text-align: right;
+    }
 
     /* ── BAR ROW ── */
     .bar-row {
@@ -324,12 +335,6 @@
       flex-direction: column;
       gap: 2px;
       overflow: hidden;
-    }
-
-    .bar-code-wrap {
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
 
     .bar-code {
@@ -366,12 +371,14 @@
       align-items: center;
       justify-content: center;
     }
+
     .bar-ops-num {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 12px;
       font-weight: 700;
       color: var(--cyan);
     }
+
     .bar-ops-empty {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
@@ -385,6 +392,7 @@
       justify-content: center;
       gap: 8px;
     }
+
     .bar-link {
       display: inline-flex;
       align-items: center;
@@ -393,9 +401,19 @@
       flex-shrink: 0;
       text-decoration: none;
     }
-    .bar-link:hover { color: var(--cyan); }
-    [data-theme="light"] .bar-link { color: #000000; }
-    [data-theme="light"] .bar-link:hover { color: var(--cyan); }
+
+    .bar-link:hover {
+      color: var(--cyan);
+    }
+
+    [data-theme="light"] .bar-link {
+      color: #000000;
+    }
+
+    [data-theme="light"] .bar-link:hover {
+      color: var(--cyan);
+    }
+
     .bar-link-ops {
       display: inline-flex;
       align-items: center;
@@ -404,9 +422,18 @@
       text-decoration: none;
       flex-shrink: 0;
     }
-    .bar-link-ops:hover { color: var(--cyan); }
-    [data-theme="light"] .bar-link-ops { color: #000000; }
-    [data-theme="light"] .bar-link-ops:hover { color: var(--cyan); }
+
+    .bar-link-ops:hover {
+      color: var(--cyan);
+    }
+
+    [data-theme="light"] .bar-link-ops {
+      color: #000000;
+    }
+
+    [data-theme="light"] .bar-link-ops:hover {
+      color: var(--cyan);
+    }
 
     /* ── TRACK ── */
     .track-wrap {
@@ -439,59 +466,20 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 2px;
+      width: 1px;
       pointer-events: none;
+      transform: translateX(-0.5px);
+      z-index: 5;
     }
 
     .track-marker.min {
       background: var(--yellow);
-      opacity: 1;
+      box-shadow: 0 0 2px rgba(245, 200, 66, 0.4);
     }
 
     .track-marker.lim {
       background: var(--red);
-      opacity: 1;
-    }
-
-    /* ── OPS BADGE NA BARRA ── */
-    .bar-ops {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 8px;
-      font-weight: 600;
-      color: var(--cyan);
-      background: rgba(0,212,255,0.08);
-      border: 1px solid rgba(0,212,255,0.25);
-      border-radius: 2px;
-      padding: 1px 5px;
-      white-space: nowrap;
-      margin-top: 2px;
-      text-decoration: none;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .bar-ops:hover {
-      background: rgba(0,212,255,0.16);
-      border-color: rgba(0,212,255,0.5);
-    }
-    [data-theme="light"] .bar-ops {
-      color: var(--cyan);
-      background: rgba(0,119,204,0.08);
-      border-color: rgba(0,119,204,0.25);
-    }
-    [data-theme="light"] .bar-ops:hover {
-      background: rgba(0,119,204,0.15);
-      border-color: rgba(0,119,204,0.5);
-    }
-
-    /* ── VALUE ── */
-    .bar-val {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: right;
-      white-space: nowrap;
+      box-shadow: 0 0 2px rgba(255, 77, 109, 0.4);
     }
 
     .bar-divider {
@@ -503,14 +491,15 @@
 
     /* ── PAINEL DE NOTIFICAÇÕES ── */
     #notif-panel {
-      position: fixed;
-      top: 20px;
-      right: 20px;
+      position: sticky;
+      top: 24px;
       width: 300px;
+      max-height: 80vh;
       display: flex;
       flex-direction: column;
       gap: 0;
-      z-index: 8000;
+      align-self: flex-start;
+      flex-shrink: 0;
     }
 
     #notif-header {
@@ -568,7 +557,7 @@
     #notif-list {
       display: flex;
       flex-direction: column;
-      max-height: calc(100vh - 80px);
+      max-height: calc(80vh - 60px);
       overflow-y: auto;
       border: 1px solid var(--border);
       border-top: none;
@@ -669,9 +658,18 @@
       transition: color 0.15s;
       flex-shrink: 0;
     }
-    .notif-link:hover { color: var(--cyan); }
-    [data-theme="light"] .notif-link { color: #000000; }
-    [data-theme="light"] .notif-link:hover { color: var(--cyan); }
+
+    .notif-link:hover {
+      color: var(--cyan);
+    }
+
+    [data-theme="light"] .notif-link {
+      color: #000000;
+    }
+
+    [data-theme="light"] .notif-link:hover {
+      color: var(--cyan);
+    }
 
     .notif-x {
       background: none;
@@ -715,30 +713,6 @@
       font-weight: 700;
     }
 
-    /* ── FOOTER ── */
-    .panel-footer {
-      background: var(--s1);
-      border-top: 1px solid var(--border);
-      padding: 10px 18px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .footer-counter {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-    }
-
-    .footer-counter .count-val {
-      font-size: 13px;
-      font-weight: 700;
-    }
 
     /* ── TOOLTIP ── */
     .tooltip {
@@ -826,22 +800,26 @@
       justify-content: space-between;
       gap: 8px;
     }
+
     .tt-ops-info {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
+
     .tt-ops-label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 9px;
       color: var(--muted);
     }
+
     .tt-ops-val {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       font-weight: 700;
       color: var(--cyan);
     }
+
     .tt-ops-link {
       display: inline-flex;
       align-items: center;
@@ -850,8 +828,8 @@
       font-size: 8px;
       font-weight: 600;
       color: var(--cyan);
-      background: rgba(0,212,255,0.08);
-      border: 1px solid rgba(0,212,255,0.25);
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.25);
       border-radius: 2px;
       padding: 3px 7px;
       text-decoration: none;
@@ -859,7 +837,10 @@
       white-space: nowrap;
       align-self: center;
     }
-    .tt-ops-link:hover { background: rgba(0,212,255,0.18); }
+
+    .tt-ops-link:hover {
+      background: rgba(0, 212, 255, 0.18);
+    }
 
     .tt-note {
       font-family: 'IBM Plex Mono', monospace;
@@ -870,25 +851,344 @@
       line-height: 1.4;
     }
 
+    /* ── FILTROS KANBAN ── */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 8px 14px;
+      background: rgba(18, 24, 38, .5);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 20;
+    }
+
+    [data-theme="light"] .filters {
+      background: rgba(226, 232, 244, .6);
+    }
+
+    .ms-wrap {
+      position: relative;
+    }
+
+    .ms-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(26, 32, 53, .5);
+      border: 1px solid rgba(0, 212, 255, .15);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 5px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .2s;
+      min-width: 100px;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .ms-btn:hover,
+    .ms-btn.open {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(0, 212, 255, .08);
+      box-shadow: 0 0 10px rgba(0, 212, 255, .15);
+    }
+
+    [data-theme="light"] .ms-btn {
+      background: #ffffff;
+      border-color: rgba(0, 119, 170, .2);
+      color: var(--text);
+    }
+
+    [data-theme="light"] .ms-btn:hover,
+    [data-theme="light"] .ms-btn.open {
+      background: rgba(0, 119, 170, .06);
+      box-shadow: 0 0 10px rgba(0, 119, 170, .1);
+    }
+
+    .ms-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
+    }
+
+    .ms-arrow {
+      font-size: 8px;
+      flex-shrink: 0;
+      transition: transform .15s;
+      color: var(--text2);
+    }
+
+    .ms-btn.open .ms-arrow {
+      transform: rotate(180deg);
+    }
+
+    .ms-count {
+      background: var(--cyan);
+      color: #050810;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .ms-count {
+      color: #fff;
+    }
+
+    .ms-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      background: rgba(13, 17, 25, .97);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--cyan);
+      border-radius: 6px;
+      min-width: 180px;
+      z-index: 50;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .6);
+    }
+
+    .ms-dropdown.open {
+      display: block;
+    }
+
+    [data-theme="light"] .ms-dropdown {
+      background: var(--s1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+    }
+
+    .ms-actions {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ms-act-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      border-right: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 5px;
+      cursor: pointer;
+      transition: color .15s;
+    }
+
+    .ms-act-btn:last-child {
+      border-right: none;
+    }
+
+    .ms-act-btn:hover {
+      color: var(--cyan);
+    }
+
+    .ms-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      transition: all .15s;
+      border-bottom: 1px solid rgba(26, 32, 53, .5);
+    }
+
+    .ms-item:last-child {
+      border-bottom: none;
+    }
+
+    .ms-item:hover {
+      background: rgba(0, 212, 255, .08);
+      color: var(--cyan);
+    }
+
+    .ms-item input[type=checkbox] {
+      accent-color: var(--cyan);
+      width: 13px;
+      height: 13px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .ms-item label {
+      cursor: pointer;
+      color: var(--text);
+      flex: 1;
+    }
+
+    [data-theme="light"] .ms-item {
+      border-bottom-color: rgba(192, 204, 223, .5);
+    }
+
+    [data-theme="light"] .ms-item:hover {
+      background: rgba(0, 119, 170, .06);
+    }
+
+    .search-input {
+      background: rgba(26, 32, 53, .5);
+      border: 1px solid rgba(0, 212, 255, .15);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 5px 10px;
+      outline: none;
+      transition: all .2s;
+      flex: 1;
+      min-width: 160px;
+      max-width: 280px;
+    }
+
+    .search-input:focus {
+      border-color: var(--cyan);
+      background: rgba(0, 212, 255, .05);
+      box-shadow: 0 0 8px rgba(0, 212, 255, .1);
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    [data-theme="light"] .search-input {
+      background: #ffffff;
+      border-color: rgba(0, 119, 170, .2);
+      color: var(--text);
+    }
+
+    [data-theme="light"] .search-input:focus {
+      background: rgba(0, 119, 170, .04);
+    }
+
+    [data-theme="light"] .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .clear-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text2);
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all .2s;
+      border-radius: 4px;
+      letter-spacing: .5px;
+      white-space: nowrap;
+    }
+
+    .clear-btn:hover {
+      color: var(--red);
+      background: rgba(255, 77, 109, .1);
+      border-color: rgba(255, 77, 109, .3);
+    }
+
+    /* ── IMPRESSÃO / PDF ── */
+    @media print {
+      * {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+        margin: 0;
+        min-height: unset;
+        display: block;
+      }
+
+      /* Ocultar elementos irrelevantes */
+      #notif-panel,
+      .btn-trocar,
+      .filters,
+      .tooltip,
+      #globalLoading {
+        display: none !important;
+      }
+
+      #kanban-panel {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .panel-frame {
+        box-shadow: none;
+        border: 1px solid #c0c0c0;
+      }
+
+      /* Remover cantos decorativos */
+      .panel-frame::before,
+      .panel-frame::after,
+      .panel-frame .corner-tr,
+      .panel-frame .corner-bl {
+        display: none;
+      }
+
+      .panel-header {
+        border-top: 3px solid #00d4ff;
+      }
+    }
+
     /* ── LOADING ── */
     .global-loading {
-      position: fixed; inset: 0; z-index: 999;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
       background: var(--bg);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
     }
+
     .global-loading-icon {
-      width: 48px; height: 48px; object-fit: contain;
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
       filter: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(160deg);
       opacity: 0.85;
       animation: global-spin 2.5s linear infinite;
     }
-    [data-theme="light"] .global-loading-icon { filter: brightness(0); opacity: 1; }
-    .global-loading-text {
-      font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600;
-      color: var(--cyan); letter-spacing: 2px;
+
+    [data-theme="light"] .global-loading-icon {
+      filter: brightness(0);
+      opacity: 1;
     }
-    [data-theme="light"] .global-loading-text { color: #000000; }
-    @keyframes global-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .global-loading-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cyan);
+      letter-spacing: 2px;
+    }
+
+    [data-theme="light"] .global-loading-text {
+      color: #000000;
+    }
+
+    @keyframes global-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
@@ -908,34 +1208,35 @@
       <div class="panel-header">
         <div class="header-left">
           <img src="assets/img/maquina-de-torno.png" class="panel-icon" alt="">
-          <div>
-            <div class="panel-title" style="display:flex; align-items:center; gap:8px;">
-              Kanban Usinagem
-              <span style="font-size:8px; color:var(--yellow); border:1px solid var(--yellow); padding:0 4px; border-radius:1px; font-weight:700; letter-spacing:0;">EM TESTE</span>
-            </div>
-            <div class="panel-subtitle" id="panel-subtitle">CONTROLE DE ESTOQUE — 0 itens</div>
+          <div class="panel-title">
+            Kanban Usinagem
           </div>
         </div>
         <div class="header-legend">
           <div class="legend-item">
-            <div class="legend-dot" style="background:var(--yellow)"></div>BAIXO
+            <div class="legend-dot" style="background:var(--yellow)"></div>
+            BAIXO <span id="cnt-baixo" class="legend-count" style="color:var(--yellow)">0</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background:var(--green)"></div>NORMAL
+            <div class="legend-dot" style="background:var(--green)"></div>
+            NORMAL <span id="cnt-normal" class="legend-count" style="color:var(--green)">0</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background:var(--red)"></div>EXCEDIDO
+            <div class="legend-dot" style="background:var(--red)"></div>
+            EXCEDIDO <span id="cnt-excedido" class="legend-count" style="color:var(--red)">0</span>
           </div>
-          <div class="legend-item" style="margin-left:4px;gap:3px;">
-            <div style="width:1px;height:10px;background:var(--yellow);opacity:0.8;"></div>MÍN
-          </div>
-          <div class="legend-item" style="gap:3px;">
-            <div style="width:1px;height:10px;background:var(--red);opacity:0.8;"></div>LIM
+          <div class="legend-item" style="border-left: 1px solid var(--border); padding-left: 12px; margin-left: 4px;">
+            TOTAL <span id="badge-total-items" class="legend-count" style="color:var(--text2)">0</span>
           </div>
         </div>
+        <button class="btn-trocar" onclick="window.print()" title="Gerar Relatório PDF" style="padding: 5px 8px;">
+          <img src="assets/img/pdf-file.png"
+            style="width:13px; height:13px; filter:brightness(0) saturate(100%) invert(18%) sepia(99%) saturate(2000%) hue-rotate(340deg); flex-shrink:0;"
+            alt="">
+        </button>
         <button class="btn-trocar" onclick="window.location.href='index.html'" title="Voltar ao Dashboard">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"/>
+            <polyline points="15 18 9 12 15 6" />
           </svg>
           Dashboard
         </button>
@@ -968,6 +1269,25 @@
         </button>
       </div>
 
+      <!-- FILTROS -->
+      <div class="filters" id="kanban-filters">
+        <div class="ms-wrap" id="wrap-fStatus">
+          <div class="ms-btn" id="btn-fStatus" onclick="toggleMs('fStatus')">
+            <span class="ms-label" id="lbl-fStatus">Status: todos</span>
+            <span class="ms-arrow">▼</span>
+          </div>
+          <div class="ms-dropdown" id="drop-fStatus">
+            <div class="ms-actions">
+              <button class="ms-act-btn" onclick="selectAllMs('fStatus')">Todos</button>
+              <button class="ms-act-btn" onclick="clearMs('fStatus')">Limpar</button>
+            </div>
+            <div id="items-fStatus"></div>
+          </div>
+        </div>
+        <input type="text" class="search-input" id="kanban-search" placeholder="Buscar código ou descrição...">
+        <button class="clear-btn" onclick="clearKanbanFilters()">✕ Limpar Filtros</button>
+      </div>
+
       <div class="panel-body">
         <div class="bar-header">
           <div class="bar-header-col">Produto</div>
@@ -980,23 +1300,6 @@
         <div id="bar-list"></div>
       </div>
 
-      <div class="panel-footer">
-        <div class="footer-counter">
-          <div class="legend-dot"
-            style="background:var(--yellow);width:7px;height:7px;border-radius:1px;flex-shrink:0;"></div>
-          BAIXO <span class="count-val" id="cnt-baixo" style="color:var(--yellow)">0</span>
-        </div>
-        <div class="footer-counter">
-          <div class="legend-dot" style="background:var(--green);width:7px;height:7px;border-radius:1px;flex-shrink:0;">
-          </div>
-          NORMAL <span class="count-val" id="cnt-normal" style="color:var(--green)">0</span>
-        </div>
-        <div class="footer-counter">
-          <div class="legend-dot" style="background:var(--red);width:7px;height:7px;border-radius:1px;flex-shrink:0;">
-          </div>
-          EXCEDIDO <span class="count-val" id="cnt-excedido" style="color:var(--red)">0</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1037,8 +1340,8 @@
         </div>
         <a class="tt-ops-link" id="tt-ops-link" href="#" target="_blank">
           <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
           </svg>
           Ver OPs
         </a>
@@ -1048,6 +1351,123 @@
   </div>
 
   <script>
+    // ── ESTADO GLOBAL ────────────────────────────────────────────────
+    var allData = [];
+    var msState = {};
+    var _searchDebounce;
+
+    // ── MULTISELECT ENGINE ───────────────────────────────────────────
+    function initMs(id, values, labelDefault) {
+      msState[id] = new Set();
+      var container = document.getElementById('items-' + id);
+      if (!container) return;
+      container.innerHTML = '';
+      values.forEach(function (v) {
+        var item = document.createElement('div');
+        item.className = 'ms-item';
+        item.dataset.val = v;
+        var uid = id + '_' + v.replace(/\W/g, '_');
+        item.innerHTML = '<input type="checkbox" id="' + uid + '" value="' + v + '"><label for="' + uid + '">' + v + '</label>';
+        item.querySelector('input').onchange = function () {
+          if (this.checked) msState[id].add(v); else msState[id].delete(v);
+          updateMsLabel(id, labelDefault);
+          applyFilters();
+        };
+        container.appendChild(item);
+      });
+    }
+
+    function toggleMs(id) {
+      var drop = document.getElementById('drop-' + id);
+      var btn = document.getElementById('btn-' + id);
+      if (!drop || !btn) return;
+      var isOpen = drop.classList.contains('open');
+      closeAllMs();
+      if (!isOpen) { drop.classList.add('open'); btn.classList.add('open'); }
+    }
+
+    function closeAllMs() {
+      document.querySelectorAll('.ms-dropdown').forEach(function (d) { d.classList.remove('open'); });
+      document.querySelectorAll('.ms-btn').forEach(function (b) { b.classList.remove('open'); });
+    }
+
+    function selectAllMs(id) {
+      var defaultLabel = id === 'fStatus' ? 'Status: todos' : 'todos';
+      document.querySelectorAll('#items-' + id + ' .ms-item').forEach(function (item) {
+        item.querySelector('input').checked = true;
+        msState[id].add(item.dataset.val);
+      });
+      updateMsLabel(id, defaultLabel);
+      applyFilters();
+    }
+
+    function clearMs(id) {
+      var defaultLabel = id === 'fStatus' ? 'Status: todos' : 'todos';
+      msState[id] = new Set();
+      document.querySelectorAll('#items-' + id + ' input').forEach(function (cb) { cb.checked = false; });
+      updateMsLabel(id, defaultLabel);
+      applyFilters();
+    }
+
+    function updateMsLabel(id, labelDefault) {
+      var sel = msState[id];
+      var btn = document.getElementById('btn-' + id);
+      var lbl = document.getElementById('lbl-' + id);
+      if (!btn || !lbl) return;
+      var old = btn.querySelector('.ms-count');
+      if (old) old.remove();
+      if (!sel || sel.size === 0) {
+        lbl.textContent = labelDefault;
+        btn.style.borderColor = ''; btn.style.color = '';
+      } else if (sel.size === 1) {
+        lbl.textContent = [...sel][0];
+        btn.style.borderColor = 'var(--cyan)'; btn.style.color = 'var(--cyan)';
+      } else {
+        lbl.textContent = 'Status:';
+        var badge = document.createElement('span');
+        badge.className = 'ms-count'; badge.textContent = sel.size;
+        btn.insertBefore(badge, btn.querySelector('.ms-arrow'));
+        btn.style.borderColor = 'var(--cyan)'; btn.style.color = 'var(--cyan)';
+      }
+    }
+
+    function clearKanbanFilters() {
+      clearMs('fStatus');
+      document.getElementById('kanban-search').value = '';
+      applyFilters();
+    }
+
+    function applyFilters() {
+      if (!allData.length) return;
+      var selStatus = msState['fStatus'] || new Set();
+      var searchVal = (document.getElementById('kanban-search').value || '').toLowerCase().trim();
+
+      var filtered = allData.filter(function (item) {
+        if (selStatus.size > 0) {
+          var cfg = getCfg(item.cod);
+          var status = getStatus(item.atual, cfg);
+          if (!selStatus.has(status.label)) return false;
+        }
+        if (searchVal) {
+          var hay = (item.cod + ' ' + item.desc).toLowerCase();
+          if (!hay.includes(searchVal)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        var list = document.getElementById('bar-list');
+        list.innerHTML = '<div style="padding:40px 0;text-align:center;font-family:\'IBM Plex Mono\',monospace;font-size:11px;letter-spacing:1px;color:var(--text2);">Nenhum item encontrado</div>';
+        document.getElementById('cnt-baixo').textContent = 0;
+        document.getElementById('cnt-normal').textContent = 0;
+        document.getElementById('cnt-excedido').textContent = 0;
+        document.getElementById('badge-total-items').textContent = 0;
+        return;
+      }
+
+      renderKanban(filtered);
+    }
+
     // ── CONFIG POR ITEM ──────────────────────────────────────────────
     const itemConfig = [
       { cod: "704216", minimo: 25, limite: 62 }, // BUCHA DF50.5 X 4.76
@@ -1062,11 +1482,11 @@
       { cod: "128015", minimo: 25, limite: 100 }, // BUCHA M16 ESQ GARFO M16 ESQ ROT EQ
       { cod: "094646", minimo: 25, limite: 100 }, // EIXO D19.5 X 915 ROL LIMP ROT EQ
       { cod: "152269", minimo: 25, limite: 100 }, // BUCHA 75 X D100 X DF60
-      { cod: "036768", minimo: 25, limite: 100 }, // BUCHA D75 X 60
-      { cod: "029413", minimo: 25, limite: 100 }, // EIXO RODA TRIPPER CT
+      { cod: "036768", minimo: 19, limite: 100 }, // BUCHA D75 X 60
+      { cod: "029413", minimo: 24, limite: 100 }, // EIXO RODA TRIPPER CT
       { cod: "080807", minimo: 25, limite: 100 }, // BUCHA SUP SUPTE HELD D60 X DF43
       { cod: "127527", minimo: 25, limite: 100 }, // EIXO D25.00 X D20 X 205 ROLAMENTO 20 EQ
-      { cod: "063327", minimo: 25, limite: 100 }, // BUCHA D31.75 X DF25.5 X 40
+      { cod: "063327", minimo: 18, limite: 100 }, // BUCHA D31.75 X DF25.5 X 40
       { cod: "080806", minimo: 25, limite: 100 }, // BUCHA INF SUPTE HELD D60 X DF43 X DF10
       { cod: "081723", minimo: 25, limite: 100 }, // EIXO ROL TROLE D25 X D17 X 30
       { cod: "093130", minimo: 25, limite: 100 }, // ESTIC 970 FIN ARO ROT MLR
@@ -1074,7 +1494,7 @@
       { cod: "140455", minimo: 25, limite: 100 }, // EIXO D25.00 X D20 X 290 WA20 EQ
       { cod: "140908", minimo: 25, limite: 100 }, // BUCHA D35 X 30 F20 ACION BIF Q320 EQ
       { cod: "120843", minimo: 25, limite: 100 }, // FIX D40 X 50 EIXO ACION MANUAL EC 51600
-      { cod: "156542", minimo: 25, limite: 100 }, // SUPTE SENSOR EMBUCHAMENTO D90 X 40
+      { cod: "156542", minimo: 23, limite: 100 }, // SUPTE SENSOR EMBUCHAMENTO D90 X 40
       { cod: "080900", minimo: 25, limite: 100 }, // PINO D75 X 170 RV
       { cod: "606627", minimo: 25, limite: 100 }, // ROLETE GUIA ACO TC D90 X D70 X 69 X DF51
       { cod: "060044", minimo: 25, limite: 100 }, // BUCHA D25 X D16.5 X 30
@@ -1098,7 +1518,7 @@
     }
 
     function esc(str) {
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function trocarArquivo() {
@@ -1107,7 +1527,7 @@
 
     // ── PROCESSAR XLSX ───────────────────────────────────────────────
     function processarXlsx(binaryStr) {
-      const wb = XLSX.read(binaryStr, { 
+      const wb = XLSX.read(binaryStr, {
         type: 'binary',
         cellFormula: false,
         cellHTML: false,
@@ -1126,7 +1546,7 @@
               Abas disponíveis: <span style="color:var(--text)">${wb.SheetNames.join(', ')}</span>
             </div>
           </div>`;
-        document.getElementById('panel-subtitle').textContent = 'ABA \"ESTOQUE_KANBAN\" NÃO ENCONTRADA';
+        document.getElementById('badge-total-items').textContent = 'erro';
         return;
       }
 
@@ -1135,18 +1555,18 @@
       const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
 
       if (data.length < 1) {
-        document.getElementById('panel-subtitle').textContent = 'ABA VAZIA';
+        document.getElementById('badge-total-items').textContent = 0;
         return;
       }
 
       // 1. Identifica os índices das colunas no cabeçalho (primeira linha)
       const header = data[0].map(h => normKey(String(h)));
       const idx = {
-        cod:    header.findIndex(h => ['CODIGO','COD','B1_COD','PRODUTO'].includes(h)),
-        desc:   header.findIndex(h => ['DESCRICAO','DESC','B1_DESC'].includes(h)),
-        atual:  header.findIndex(h => ['QUANTIDADE','QTD','B2_QATU','SALDO','ATUAL'].includes(h)),
-        qtdOps: header.findIndex(h => ['QTD_OPS_ABERTO','QTD_OP'].includes(h)),
-        ops:    header.findIndex(h => ['OPS_EM_ABERTO','OPS','OP'].includes(h))
+        cod: header.findIndex(h => ['CODIGO', 'COD', 'B1_COD', 'PRODUTO'].includes(h)),
+        desc: header.findIndex(h => ['DESCRICAO', 'DESC', 'B1_DESC'].includes(h)),
+        atual: header.findIndex(h => ['QUANTIDADE', 'QTD', 'B2_QATU', 'SALDO', 'ATUAL'].includes(h)),
+        qtdOps: header.findIndex(h => ['QTD_OPS_ABERTO', 'QTD_OP'].includes(h)),
+        ops: header.findIndex(h => ['OPS_EM_ABERTO', 'OPS', 'OP'].includes(h))
       };
 
       // 2. Extrai os dados usando os índices (evita criar milhares de objetos)
@@ -1157,11 +1577,11 @@
         if (!cod) continue;
 
         items.push({
-          cod:    cod,
-          desc:   idx.desc !== -1 ? String(row[idx.desc] || '').trim() : '',
-          atual:  idx.atual !== -1 ? (parseFloat(row[idx.atual]) || 0) : 0,
+          cod: cod,
+          desc: idx.desc !== -1 ? String(row[idx.desc] || '').trim() : '',
+          atual: idx.atual !== -1 ? (parseFloat(row[idx.atual]) || 0) : 0,
           qtdOps: idx.qtdOps !== -1 ? (parseInt(row[idx.qtdOps]) || 0) : 0,
-          ops:    idx.ops !== -1 ? String(row[idx.ops] || '').trim() : ''
+          ops: idx.ops !== -1 ? String(row[idx.ops] || '').trim() : ''
         });
       }
 
@@ -1176,39 +1596,49 @@
               <span style="color:var(--text)">${cols}</span>
             </div>
           </div>`;
-        document.getElementById('panel-subtitle').textContent = 'COLUNAS NÃO RECONHECIDAS';
+        document.getElementById('badge-total-items').textContent = 'erro';
         return;
       }
 
-      renderKanban(items);
+      allData = items;
+      initMs('fStatus', ['BAIXO', 'NORMAL', 'EXCEDIDO'], 'Status: todos');
+      notificarEstoque(allData);
+      applyFilters();
     }
 
     // ── INIT — lê arquivo do sessionStorage compartilhado ────────────
     (function init() {
       const b64 = sessionStorage.getItem('dash_wb_binary');
-      const list = document.getElementById('bar-list');
-      
-      if (!b64) { 
+
+      if (!b64) {
         console.warn('[Kanban] Nenhum dado encontrado no sessionStorage.');
-        window.location.replace('upload.html'); 
-        return; 
+        window.location.replace('upload.html');
+        return;
       }
 
       try {
         console.log('[Kanban] Tamanho do Base64 recuperado:', (b64.length / 1024 / 1024).toFixed(2), 'MB');
-        
-        /* Decodifica usando atob puro */
+
         const binary = atob(b64);
         processarXlsx(binary);
-        
-        // Esconde loading após processar
+
+        document.addEventListener('click', function (e) {
+          if (!e.target.closest('.ms-wrap')) closeAllMs();
+        });
+
+        document.getElementById('kanban-search').oninput = function () {
+          clearTimeout(_searchDebounce);
+          _searchDebounce = setTimeout(applyFilters, 300);
+        };
+
         setTimeout(() => {
           const loader = document.getElementById('globalLoading');
           if (loader) loader.style.display = 'none';
         }, 800);
-        
+
       } catch (e) {
         console.error('[Kanban] Erro crítico:', e);
+        const list = document.getElementById('bar-list');
         if (list) {
           list.innerHTML = `
             <div style="padding:40px; text-align:center; color:var(--red); font-family:'IBM Plex Mono',monospace;">
@@ -1264,12 +1694,10 @@
         const itemUrl = `https://intranet.consilos.com.br/simulacao-estoque/index/${encodeURIComponent(item.cod)}`;
 
         row.innerHTML = `
-          <!-- col 1: produto -->
           <div class="bar-info">
             <span class="bar-code">${esc(item.cod)}</span>
             <span class="bar-desc" title="${esc(item.desc)}">${esc(item.desc) || '—'}</span>
           </div>
-          <!-- col 2: gráfico -->
           <div class="track-wrap" data-idx="${idx}">
             <div class="track-bg">
               <div class="track-fill" data-pct="${pctFill}" style="background:${status.color}"></div>
@@ -1277,21 +1705,17 @@
             <div class="track-marker min" style="left:${pctMin}%"></div>
             <div class="track-marker lim" style="left:${pctLim}%"></div>
           </div>
-          <!-- col 3: saldo -->
           <div class="bar-val" style="color:${status.color}">${item.atual}</div>
-          <!-- col 4: qtd op -->
           <div class="bar-ops-col">
             ${item.qtdOps > 0
-              ? `<span class="bar-ops-num">${item.qtdOps}</span>`
-              : `<span class="bar-ops-empty">—</span>`}
+            ? `<span class="bar-ops-num">${item.qtdOps}</span>`
+            : `<span class="bar-ops-empty">—</span>`}
           </div>
-          <!-- col 5: link produto -->
           <div class="bar-links-col">
             <a class="bar-link" href="${itemUrl}" target="_blank" title="Estoque do produto">
               ${svgLink}
             </a>
           </div>
-          <!-- col 6: link ops -->
           <div class="bar-links-col">
             ${item.ops ? `<a class="bar-link-ops" href="${opsUrl}" target="_blank" title="OPs em aberto">${svgLink}</a>` : ''}
           </div>
@@ -1305,15 +1729,12 @@
         list.appendChild(row);
       });
 
-      document.getElementById('panel-subtitle').textContent =
-        `CONTROLE DE ESTOQUE — ${items.length} ${items.length === 1 ? 'item' : 'itens'}`;
+      document.getElementById('badge-total-items').textContent = items.length;
       document.getElementById('cnt-baixo').textContent = cntBaixo;
       document.getElementById('cnt-normal').textContent = cntNormal;
       document.getElementById('cnt-excedido').textContent = cntExcedido;
 
       document.getElementById('kanban-panel').style.display = 'block';
-
-      notificarEstoque(items);
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
         document.querySelectorAll('.track-fill').forEach(el => {
