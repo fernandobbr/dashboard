@@ -12,7 +12,7 @@
     var _t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', _t);
     var _h = window.location.hostname;
-    // if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
+    if (_h !== 'localhost' && _h !== '127.0.0.1') window.location.replace('maintenance.html');
   </script>
   <style>
     body {

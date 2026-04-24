@@ -1,0 +1,18 @@
+PROMPT DE IMPLEMENTAÇÃO: EXPORTAÇÃO PARA PDF - KANBAN USINAGEM
+
+Objetivo: Adicionar uma funcionalidade de exportação para PDF (Relatório) que preserve a visualização dos dados filtrados e oculte elementos irrelevantes.
+
+1. FUNCIONALIDADE: Exportação para PDF (Relatório)
+- Botão: Inserir um botão discreto no cabeçalho (ao lado do botão 'Trocar Arquivo') com o texto "GERAR PDF" e o ícone localizado em 'assets/img/pdf-file.png'.
+- Ação: Ao clicar, disparar o comando nativo window.print().
+- Configuração de Impressão (CSS @media print):
+    * Ocultar (display: none): Painel de Notificações (#notif-panel), botões de navegação, botão de tema, barra de filtros e o botão 'Trocar Arquivo'.
+    * Preservação de Cores: Forçar a exibição de cores de fundo e bordas nas barras de status usando 'print-color-adjust: exact' e '-webkit-print-color-adjust: exact'.
+    * Layout: Ajustar o container principal para ocupar a largura total da página impressa, removendo sombras e brilhos excessivos para garantir clareza na impressão.
+    * O PDF deve refletir exatamente os itens que estão visíveis na tela no momento (mantendo os filtros aplicados pelo usuário).
+
+2. Regras de Integridade e Execução:
+- EXECUTAR SEM FAZER NOVAS PERGUNTAS para economia de tokens.
+- NÃO REALIZAR PUSH PARA O GITHUB sem autorização explícita. Manter alterações locais.
+- Seguir as especificações de estilo monoespaçado (IBM Plex Mono) para o novo botão.
+- Não sugerir melhorias fora deste contexto.
