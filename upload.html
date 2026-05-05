@@ -16,6 +16,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="assets/js/main.js?v=4.5"></script>
   <script>
+    if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+      window.location.replace('maintenance.html');
+    }
     var t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', t);
 

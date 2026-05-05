@@ -148,28 +148,30 @@
         <img class="maint-icon" src="assets/img/gear.png" alt="">
       </div>
       <div class="maint-eyebrow">Dashboard Produção</div>
-      <div class="maint-title">O Dashboard Voltou!</div>
+      <div class="maint-title">Em Manutenção</div>
       <div class="maint-desc">
-        A manutenção foi concluída.<br>
-        Você será redirecionado em instantes...
+        Estamos atualizando o sistema para melhor atendê-lo.<br>
+        O acesso será restabelecido em breve.
       </div>
       <div class="maint-return-box">
-        <button onclick="sairManutencao()" style="width:100%; padding:12px; background:var(--cyan); border:none; color:#000; font-weight:700; cursor:pointer; font-family:'Poppins', sans-serif; letter-spacing:1px; border-radius:2px;">ACESSAR AGORA</button>
+        <span class="maint-return-label">Previsão de Retorno</span>
+        <div class="maint-return-time" id="maint-clock">--:--</div>
+        <div class="maint-clock">SISTEMA TEMPORARIAMENTE INDISPONÍVEL</div>
       </div>
     </div>
 
   </div>
 
   <script>
-    function sairManutencao() {
-      // Limpa possíveis estados antigos
-      sessionStorage.clear();
-      // Redireciona com parâmetro de cache busting
-      window.location.href = 'index.html?v=' + Date.now();
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const clock = document.getElementById('maint-clock');
+      if (clock) clock.textContent = h + ':' + m;
     }
-
-    // Redireciona automaticamente após 3 segundos
-    setTimeout(sairManutencao, 3000);
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 
 </body>

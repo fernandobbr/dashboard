@@ -12,6 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/global.css?v=4.5">
   <script>
+    if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+      window.location.replace('maintenance.html');
+    }
     var _t = sessionStorage.getItem('dash_theme') || 'light';
     document.documentElement.setAttribute('data-theme', _t);
 
