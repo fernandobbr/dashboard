@@ -148,31 +148,28 @@
         <img class="maint-icon" src="assets/img/gear.png" alt="">
       </div>
       <div class="maint-eyebrow">Dashboard Produção</div>
-      <div class="maint-title">Dash em Manutenção</div>
+      <div class="maint-title">O Dashboard Voltou!</div>
       <div class="maint-desc">
-        Motivo: Problemas com hospedagem.<br>
-        Agradeço a compreensão.
+        A manutenção foi concluída.<br>
+        Você será redirecionado em instantes...
       </div>
       <div class="maint-return-box">
-        <div class="maint-return-label">Retorno previsto</div>
-        <div class="maint-return-time">Time Out</div>
-        <div class="maint-clock" id="maint-clock">—</div>
+        <button onclick="sairManutencao()" style="width:100%; padding:12px; background:var(--cyan); border:none; color:#000; font-weight:700; cursor:pointer; font-family:'Poppins', sans-serif; letter-spacing:1px; border-radius:2px;">ACESSAR AGORA</button>
       </div>
     </div>
-
 
   </div>
 
   <script>
-    function atualizarRelogio() {
-      var agora = new Date();
-      var h = String(agora.getHours()).padStart(2, '0');
-      var m = String(agora.getMinutes()).padStart(2, '0');
-      var s = String(agora.getSeconds()).padStart(2, '0');
-      document.getElementById('maint-clock').textContent = 'Agora: ' + h + ':' + m + ':' + s;
+    function sairManutencao() {
+      // Limpa possíveis estados antigos
+      sessionStorage.clear();
+      // Redireciona com parâmetro de cache busting
+      window.location.href = 'index.html?v=' + Date.now();
     }
-    atualizarRelogio();
-    setInterval(atualizarRelogio, 1000);
+
+    // Redireciona automaticamente após 3 segundos
+    setTimeout(sairManutencao, 3000);
   </script>
 
 </body>
